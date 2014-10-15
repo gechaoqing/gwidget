@@ -2,6 +2,11 @@ gwidget
 =======
 
 android widgets defined: switchButton/Android 自定义控件:switchButton
+文件结构
+========
+SwitchButton  ------SwitchButton源码，请放在src目录任意package下<br>
+main.xml      ------主布局文件，请放在res/layout目录下<br>
+styleable.xml ------SwitchButton样式定义文件，请放在res/values目录下
 
 使用说明
 ========
