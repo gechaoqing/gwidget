@@ -1,4 +1,4 @@
-    package com.gecq.gwidget;
+package com.gecq.gwidget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
