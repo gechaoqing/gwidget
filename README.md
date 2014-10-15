@@ -33,3 +33,5 @@ SwitchButton:使用说明
 		gwidget:thumbOffColor------off状态小圆点颜色
 		gwidget:thumbOnColor ------on状态小圆点颜色
 		gwidget:thumbStyle   ------小圆点样式:match,padding
+### 3.图例
+
