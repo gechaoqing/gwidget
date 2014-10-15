@@ -1,15 +1,17 @@
 gwidget
 =======
-Android 自定义控件:switchButton...
+自定义Android控件
+SwitchButton
+============
 
-文件结构
-========
+SwitchButton:文件结构
+--------
 SwitchButton  ------SwitchButton源码，请放在src目录任意package下<br>
 main.xml      ------主布局文件，请放在res/layout目录下<br>
 styleable.xml ------SwitchButton样式定义文件，请放在res/values目录下
 
-使用说明
-========
+SwitchButton:使用说明
+--------
 ### 1.设置监听
     
 		SwitchButton sb=(SwitchButton) findViewById(R.id.equalizer);
