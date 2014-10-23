@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="switchButton">
+        <attr name="onColor" format="reference|color" />
+        <attr name="offColor" format="reference|color" />
+        <attr name="thumbOnColor" format="reference|color" />
+        <attr name="thumbOffColor" format="reference|color" />
+        <attr name="thumbStyle">
+
+            <!-- default -->
+            <enum name="padding" value="0" />
+            <enum name="match" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="radiusImage">
+        <attr name="radius" format="dimension" />
+        <attr name="radiusTopLeft" format="dimension" />
+        <attr name="radiusTopRight" format="dimension" />
+        <attr name="radiusBottomLeft" format="dimension" />
+        <attr name="radiusBottomRight" format="dimension" />
+        <attr name="borderColor" format="reference|color" />
+        <attr name="borderWidth" format="integer" />
+        <attr name="alpha" format="float" />
+        <attr name="src" format="reference|color"/>
+        <attr name="borderStyle">
+            <enum name="outside" value="0"/>
+            <enum name="over" value="1" />
+        </attr>
+        <attr name="radiusScaleType">
+            <!-- default -->
+            <enum name="centerInside" value="9" />
+            <enum name="leftCenter" value="1" />
+            <enum name="rightCenter" value="2" />
+            <enum name="topCenter" value="3" />
+            <enum name="bottomCenter" value="4" />
+            <enum name="topLeft" value="5" />
+            <enum name="topRight" value="6" />
+            <enum name="bottomLeft" value="7" />
+            <enum name="bottomRight" value="8" />
+            <enum name="centerCrop" value="0"/>
+        </attr>
+    </declare-styleable>
+    
+    <declare-styleable name="iconView">
+        <attr name="icon" format="reference|string"/>
+        <attr name="iconSize" format="dimension"/>
+        <attr name="iconColor" format="reference|color"/>
+    </declare-styleable>
+
+</resources>
