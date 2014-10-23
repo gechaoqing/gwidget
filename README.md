@@ -34,7 +34,7 @@ SwitchButton:使用说明
 ===========
 RadiusImage:使用说明
 ----------
-### 2.1Layout文件中定义样式
+### 2.1.Layout文件中定义样式
 	gwidget:borderColor      ------边框颜色
     gwidget:borderStyle      ------边框样式 over,outside(默认)
     gwidget:borderWidth      ------边框宽度
@@ -49,7 +49,7 @@ RadiusImage:使用说明
 							topLeft,topCenter,topRight
 							bottomLeft,bottomCenter,bottomRight
 							leftCenter,rightCenter
-### 2.2图例
+### 2.2.图例
 ![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage1.jpg) ------边框样式
 <br>
 ![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage2.jpg) ------取图位置
@@ -59,9 +59,9 @@ RadiusImage:使用说明
 SvgPathView:使用说明
 ----------
 	继承View，实现通过SVG Path字符串绘制图形/图标
-### 3.1Layout文件中定义样式
+### 3.1.Layout文件中定义样式
 	gwidget:icon      ------SVG Path 字符串
 	gwidget:iconColor ------图形/图标颜色
 	gwidget:iconSize  ------图形/图标大小
-### 3.2图例
+### 3.2.图例
 ![github](https://github.com/gechaoqing/gwidget/blob/master/icon.jpg) 
