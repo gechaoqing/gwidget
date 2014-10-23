@@ -33,6 +33,7 @@ SwitchButton:使用说明
 2.RadiusImage
 ===========
 RadiusImage:使用说明
+----------
 ### 2.1Layout文件中定义样式
 	gwidget:borderColor      ------边框颜色
     gwidget:borderStyle      ------边框样式 over,outside(默认)
