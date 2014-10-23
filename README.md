@@ -50,9 +50,7 @@ RadiusImage:使用说明
 							bottomLeft,bottomCenter,bottomRight
 							leftCenter,rightCenter
 ### 2.2.图例
-![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage1.jpg) ------边框样式
-<br>
-![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage2.jpg) ------取图位置
+![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage1.jpg) 
 
 3.SvgPathView
 ===========
