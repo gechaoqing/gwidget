@@ -50,8 +50,8 @@ RadiusImage:使用说明
 							bottomLeft,bottomCenter,bottomRight
 							leftCenter,rightCenter
 ### 2.2.图例
-![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage1.jpg) 
-
+![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage1.jpg) <br>
+![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage2.jpg) 
 3.SvgPathView
 ===========
 SvgPathView:使用说明
