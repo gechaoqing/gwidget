@@ -24,6 +24,8 @@ public class SvgPathView extends View {
 	private int iconColor;
 	private RectF mRectF;
 	private float mDensity;
+	private final float size=260;
+	private float trueSize;
 
 	public SvgPathView(Context context) {
 		super(context);
@@ -66,7 +68,14 @@ public class SvgPathView extends View {
 		mMatrix = new Matrix();
 		doPath();
 		mPath.computeBounds(mRectF, true);
-		mMatrix.setScale(iconSize, iconSize);
+		
+		trueSize=size*iconSize;
+		float scale=Math.min(trueSize/mRectF.width(),trueSize/mRectF.height());
+		float dx = (int) ((trueSize - mRectF.width() * scale) * 0.5f + 0.5f);
+		float dy = (int) ((trueSize - mRectF.height() * scale) * 0.5f + 0.5f);
+		mMatrix.setScale(scale, scale);
+		mMatrix.postTranslate(dx, dy);
+		
 		mPath.transform(mMatrix);
 	}
 
@@ -360,7 +369,7 @@ public class SvgPathView extends View {
 
 	@Override
 	protected void onMeasure(int wms, int hms) {
-		setMeasuredDimension((int)(mRectF.width()*iconSize)+1, (int)(mRectF.height()*iconSize)+1);
+		setMeasuredDimension((int)trueSize+1, (int)trueSize+1);
 	}
 
 }
