@@ -6,10 +6,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.CornerPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -22,7 +22,8 @@ public class SvgPathView extends View {
 	private String icon;
 	private float iconSize;
 	private int iconColor;
-	private float width=3,height=3;
+	private RectF mRectF;
+	private float mDensity;
 
 	public SvgPathView(Context context) {
 		super(context);
@@ -55,77 +56,53 @@ public class SvgPathView extends View {
 	private void init() {
 		mPaint = new Paint();
 		mPath = new Path();
+		mRectF = new RectF();
 		mPareser = new SvgParserHelper(icon, 0);
 		mPaint.setColor(this.iconColor);
 		mPaint.setDither(true);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setPathEffect(new CornerPathEffect(5));
 		mPaint.setAntiAlias(true);
-		mMatrix=new Matrix();
-		jugXY();
-		mPareser.pos=0;
+		mMatrix = new Matrix();
 		doPath();
-		
+		mPath.computeBounds(mRectF, true);
+		mMatrix.setScale(iconSize, iconSize);
+		mPath.transform(mMatrix);
 	}
 
 	private void getAttrs(Context context, AttributeSet attrs) {
 		TypedArray typedArray = context.obtainStyledAttributes(attrs,
 				R.styleable.iconView);
+		mDensity = context.getResources().getDisplayMetrics().density;
 		this.icon = typedArray.getString(R.styleable.iconView_icon);
-		this.icon = this.icon.replace('$', '-');
 		this.iconSize = typedArray.getDimension(R.styleable.iconView_iconSize,
-				12);
+				12.0f * mDensity);
+		this.iconSize *= 0.01f;
 		this.iconColor = typedArray.getColor(R.styleable.iconView_iconColor,
 				Color.BLACK);
 		typedArray.recycle();
 	}
 
-	float minX, minY, maxX, maxY, scale = 1.0f;
 	Matrix mMatrix;
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		float tw = (maxX - minX);
-		float th = (maxY - minY);
-		if (tw <= width && th <= height) {
-			scale = 1.0f;
-		} else {
-			scale = (float) ((Math
-					.min((float) (width-getPaddingLeft()-getPaddingRight()) / (float) tw, (float) (height-getPaddingBottom()-getPaddingTop()) / (float) th)));
-		}
-		canvas.save();
-		if(mMatrix!=null){
-			int dx = (int) ((width - tw * scale+getPaddingLeft()) * 0.5f + 0.5f);
-			int dy = (int) ((height - th * scale) * 0.5f + 0.5f);
-			mMatrix.setScale(scale, scale);
-			mMatrix.postTranslate(dx, dy);
-			mPath.transform(mMatrix);
-		}
 		canvas.drawPath(mPath, mPaint);
-		canvas.restore();
 	}
 
 	private void doPath(int resid) {
 		doPath(getResources().getString(resid));
 	}
 
-	private void jugXY() {
-		doPath(icon, true);
-	}
-
 	private void doPath() {
 		doPath(this.icon);
 	}
-	
-	private void doPath(String s) {
-		doPath(s, false);
-	}
 
-	private void doPath(String s, boolean jug) {
+	private void doPath(String s) {
 		if (s == null) {
 			return;
 		}
+//		System.out.println("==============================================");
 		int n = s.length();
 		mPareser.skipWhitespace();
 		float lastX = 0;
@@ -170,20 +147,20 @@ public class SvgPathView extends View {
 			switch (cmd) {
 			case 'M':
 			case 'm': {
-				float x = mPareser.nextFloat() ;
-				float y = mPareser.nextFloat() ;
+				float x = mPareser.nextFloat();
+				float y = mPareser.nextFloat();
 				if (cmd == 'm') {
 					subPathStartX += x;
 					subPathStartY += y;
-					if (!jug)
-						mPath.rMoveTo(x, y);
+					mPath.rMoveTo(x, y);
+//					System.out.println("mPath.rMoveTo(" + x + "f," + y + "f);");
 					lastX += x;
 					lastY += y;
 				} else {
 					subPathStartX = x;
 					subPathStartY = y;
-					if (!jug)
-						mPath.moveTo(x, y);
+					mPath.moveTo(x, y);
+//					System.out.println("mPath.moveTo(" + x + "f," + y + "f);");
 					lastX = x;
 					lastY = y;
 				}
@@ -191,10 +168,11 @@ public class SvgPathView extends View {
 			}
 			case 'Z':
 			case 'z': {
-				if (!jug) {
-					mPath.close();
-					mPath.moveTo(subPathStartX, subPathStartY);
-				}
+				mPath.close();
+				mPath.moveTo(subPathStartX, subPathStartY);
+//				System.out.println("mPath.close();");
+//				System.out.println("mPath.moveTo(" + subPathStartX + "f,"
+//						+ subPathStartY + "f);");
 
 				lastX = subPathStartX;
 				lastY = subPathStartY;
@@ -205,16 +183,15 @@ public class SvgPathView extends View {
 			}
 			case 'L':
 			case 'l': {
-				float x = mPareser.nextFloat() ;
-				float y = mPareser.nextFloat() ;
+				float x = mPareser.nextFloat();
+				float y = mPareser.nextFloat();
 				if (cmd == 'l') {
-					if (!jug)
-						mPath.rLineTo(x, y);
+					mPath.rLineTo(x, y);
+//					System.out.println("mPath.rLineTo(" + x + "f," + y + "f);");
 					lastX += x;
 					lastY += y;
 				} else {
-					if (!jug)
-						mPath.lineTo(x, y);
+					mPath.lineTo(x, y);
 					lastX = x;
 					lastY = y;
 				}
@@ -222,28 +199,30 @@ public class SvgPathView extends View {
 			}
 			case 'H':
 			case 'h': {
-				float x = mPareser.nextFloat() ;
+				float x = mPareser.nextFloat();
 				if (cmd == 'h') {
-					if (!jug)
-						mPath.rLineTo(x, 0);
+					mPath.rLineTo(x, 0);
+//					System.out.println("mPath.rLineTo(" + x + "f," + "0);");
 					lastX += x;
 				} else {
-					if (!jug)
-						mPath.lineTo(x, lastY);
+					mPath.lineTo(x, lastY);
+//					System.out.println("mPath.lineTo(" + x + "f," + lastY
+//							+ "f);");
 					lastX = x;
 				}
 				break;
 			}
 			case 'V':
 			case 'v': {
-				float y = mPareser.nextFloat() ;
+				float y = mPareser.nextFloat();
 				if (cmd == 'v') {
-					if (!jug)
-						mPath.rLineTo(0, y);
+					mPath.rLineTo(0, y);
+//					System.out.println("mPath.rLineTo(0," + y + "f);");
 					lastY += y;
 				} else {
-					if (!jug)
-						mPath.lineTo(lastX, y);
+					mPath.lineTo(lastX, y);
+//					System.out.println("mPath.lineTo(" + lastX + "f," + y
+//							+ "f);");
 					lastY = y;
 				}
 				break;
@@ -251,12 +230,12 @@ public class SvgPathView extends View {
 			case 'C':
 			case 'c': {
 				wasCurve = true;
-				float x1 = mPareser.nextFloat() ;
-				float y1 = mPareser.nextFloat() ;
-				float x2 = mPareser.nextFloat() ;
-				float y2 = mPareser.nextFloat() ;
-				float x = mPareser.nextFloat() ;
-				float y = mPareser.nextFloat() ;
+				float x1 = mPareser.nextFloat();
+				float y1 = mPareser.nextFloat();
+				float x2 = mPareser.nextFloat();
+				float y2 = mPareser.nextFloat();
+				float x = mPareser.nextFloat();
+				float y = mPareser.nextFloat();
 				if (cmd == 'c') {
 					x1 += lastX;
 					x2 += lastX;
@@ -265,8 +244,9 @@ public class SvgPathView extends View {
 					y2 += lastY;
 					y += lastY;
 				}
-				if (!jug)
-					mPath.cubicTo(x1, y1, x2, y2, x, y);
+				mPath.cubicTo(x1, y1, x2, y2, x, y);
+//				System.out.println("mPath.cubicTo(" + x1 + "f," + y1 + "f,"
+//						+ x2 + "f," + y2 + "f," + x + "f," + y + "f);");
 				lastX1 = x2;
 				lastY1 = y2;
 				lastX = x;
@@ -276,10 +256,10 @@ public class SvgPathView extends View {
 			case 'S':
 			case 's': {
 				wasCurve = true;
-				float x2 = mPareser.nextFloat() ;
-				float y2 = mPareser.nextFloat() ;
-				float x = mPareser.nextFloat() ;
-				float y = mPareser.nextFloat() ;
+				float x2 = mPareser.nextFloat();
+				float y2 = mPareser.nextFloat();
+				float x = mPareser.nextFloat();
+				float y = mPareser.nextFloat();
 				if (cmd == 's') {
 					x2 += lastX;
 					x += lastX;
@@ -288,8 +268,9 @@ public class SvgPathView extends View {
 				}
 				float x1 = 2 * lastX - lastX1;
 				float y1 = 2 * lastY - lastY1;
-				if (!jug)
-					mPath.cubicTo(x1, y1, x2, y2, x, y);
+				mPath.cubicTo(x1, y1, x2, y2, x, y);
+//				System.out.println("mPath.cubicTo(" + x1 + "f," + y1 + "f,"
+//						+ x2 + "f," + y2 + "f," + x + "f," + y + "f);");
 				lastX1 = x2;
 				lastY1 = y2;
 				lastX = x;
@@ -298,26 +279,25 @@ public class SvgPathView extends View {
 			}
 			case 'A':
 			case 'a': {
-				float rx = mPareser.nextFloat() ;
-				float ry = mPareser.nextFloat() ;
-				float theta = mPareser.nextFloat() ;
-				int largeArc = (int) (mPareser.nextFloat() );
-				int sweepArc = (int) (mPareser.nextFloat() );
+				float rx = mPareser.nextFloat();
+				float ry = mPareser.nextFloat();
+				float theta = mPareser.nextFloat();
+				int largeArc = (int) (mPareser.nextFloat());
+				int sweepArc = (int) (mPareser.nextFloat());
 				float x = mPareser.nextFloat();
 				float y = mPareser.nextFloat();
-				if (!jug)
-					drawArc(mPath, lastX, lastY, x, y, rx, ry, theta, largeArc,
-							sweepArc);
+				drawArc(mPath, lastX, lastY, x, y, rx, ry, theta, largeArc,
+						sweepArc);
 				lastX = x;
 				lastY = y;
 				break;
 			}
 			case 'Q':
 			case 'q':
-				float x1 = mPareser.nextFloat() ;
-				float y1 = mPareser.nextFloat() ;
-				float x = mPareser.nextFloat() ;
-				float y = mPareser.nextFloat() ;
+				float x1 = mPareser.nextFloat();
+				float y1 = mPareser.nextFloat();
+				float x = mPareser.nextFloat();
+				float y = mPareser.nextFloat();
 				if (Float.isNaN(y)) {
 					// Log.e(TAG,
 					// "Bad path coords for "+((char)cmd)+" path segment");
@@ -329,8 +309,9 @@ public class SvgPathView extends View {
 					x1 += lastX;
 					y1 += lastY;
 				}
-				if (!jug)
-					mPath.quadTo(x1, y1, x, y);
+				mPath.quadTo(x1, y1, x, y);
+//				System.out.println("mPath.quadTo(" + x1 + "f," + y1 + "f," + x
+//						+ "f," + y + "f);");
 				lastX1 = x1;
 				lastY1 = y1;
 				lastX = x;
@@ -342,8 +323,8 @@ public class SvgPathView extends View {
 			case 't':
 				x1 = 2 * lastX - lastX1;
 				y1 = 2 * lastY - lastY1;
-				x = mPareser.nextFloat() ;
-				y = mPareser.nextFloat() ;
+				x = mPareser.nextFloat();
+				y = mPareser.nextFloat();
 				if (Float.isNaN(y)) {
 					// Log.e(TAG,
 					// "Bad path coords for "+((char)cmd)+" path segment");
@@ -353,8 +334,9 @@ public class SvgPathView extends View {
 					x += lastX;
 					y += lastY;
 				}
-				if (!jug)
-					mPath.quadTo(x1, y1, x, y);
+				mPath.quadTo(x1, y1, x, y);
+//				System.out.println("mPath.quadTo(" + x1 + "f," + y1 + "f," + x
+//						+ "f," + y + "f);");
 				lastX1 = x1;
 				lastY1 = y1;
 				lastX = x;
@@ -366,23 +348,7 @@ public class SvgPathView extends View {
 				lastY1 = lastY;
 			}
 			mPareser.skipWhitespace();
-			if(jug){
-				if (lastX1 <= minX || lastX <= minX) {
-					minX = lastX1 < lastX ? lastX1 : lastX;
-				}
-				if (lastX1 >= maxX || lastX >= maxX) {
-					maxX = lastX1 > lastX ? lastX1 : lastX;
-				}
 
-				if (lastY1 <= minY || lastY <= minY) {
-					minY = lastY1 < lastY ? lastY1 : lastY;
-				}
-
-				if (lastY1 >= maxY || lastY >= maxY) {
-					maxY = lastY1 > lastY ? lastY1 : lastY;
-				}
-			}
-			
 		}
 	}
 
@@ -394,9 +360,7 @@ public class SvgPathView extends View {
 
 	@Override
 	protected void onMeasure(int wms, int hms) {
-		width*=iconSize;
-		height*=iconSize;
-		setMeasuredDimension((int)(width),(int)height);
+		setMeasuredDimension((int)(mRectF.width()*iconSize)+1, (int)(mRectF.height()*iconSize)+1);
 	}
 
 }
