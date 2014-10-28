@@ -1,6 +1,10 @@
-package com.gecq.gwidget;
+package com.gwsoft.globalLibrary.gwidget;
 
-import com.gecq.gwidget.utils.SvgParserHelper;
+
+
+
+import com.gwsoft.globalLibrary.gwidget.utils.SvgParserHelper;
+import com.imusic.iting.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -24,8 +28,13 @@ public class SvgPathView extends View {
 	private int iconColor;
 	private RectF mRectF;
 	private float mDensity;
-	private final float size=260;
-	private float trueSize;
+	private final float size=120;
+	private float width,height;
+	private int scaleType=SCALE_WITH_HEIGHT;
+	
+	private static final int SCALE_CENTER=0;
+	private static final int SCALE_WITH_WIDTH=1;
+	private static final int SCALE_WITH_HEIGHT=2;
 
 	public SvgPathView(Context context) {
 		super(context);
@@ -68,15 +77,62 @@ public class SvgPathView extends View {
 		mMatrix = new Matrix();
 		doPath();
 		mPath.computeBounds(mRectF, true);
-		
-		trueSize=size*iconSize;
-		float scale=Math.min(trueSize/mRectF.width(),trueSize/mRectF.height());
-		float dx = (int) ((trueSize - mRectF.width() * scale) * 0.5f + 0.5f);
-		float dy = (int) ((trueSize - mRectF.height() * scale) * 0.5f + 0.5f);
+		float dwidth=mRectF.width();
+		float dheight=mRectF.height();
+		width=height=size*iconSize;
+		float scale=1.0f;
+		float dx=0,dy=0;
+		switch (scaleType) {
+		case SCALE_CENTER:
+			if(width<dwidth||height<dheight)
+			{
+				scale=Math.min(width/dwidth,height/dheight);
+				getDxDyBigger(dx, dy, dwidth, dheight, scale);
+			}else{
+				scale=Math.min(dwidth/width,dheight/height);
+				getDxDySmaller(dx,dy,dwidth,dheight,scale);
+			}
+			break;
+		case SCALE_WITH_HEIGHT:
+			if(height<dheight)
+			{
+				scale=height/dheight;
+				width=dwidth*scale;
+				getDxDyBigger(dx, dy, dwidth, dheight, scale);
+			}else{
+				scale=dheight/height;
+				width=dwidth/scale;
+				getDxDySmaller(dx,dy,dwidth,dheight,scale);
+			}
+			
+			break;
+		case SCALE_WITH_WIDTH:
+			if(width<dwidth)
+			{
+				scale=width/dwidth;
+				height=dheight*scale;
+				getDxDyBigger(dx, dy, dwidth, dheight, scale);
+				
+			}else{
+				scale=dwidth/width;
+				height=dheight/scale;
+				getDxDySmaller(dx,dy,dwidth,dheight,scale);
+				
+			}
+			break;
+		}
 		mMatrix.setScale(scale, scale);
 		mMatrix.postTranslate(dx, dy);
-		
 		mPath.transform(mMatrix);
+	}
+	
+	private void getDxDySmaller(float dx,float dy,float dwidth,float dheight,float scale){
+		dx = (int) ((dwidth - width * scale) * 0.5f + 0.5f);
+		dy = (int) ((dheight - height * scale) * 0.5f + 0.5f);
+	}
+	private void getDxDyBigger(float dx,float dy,float dwidth,float dheight,float scale){
+		dx = (int) ((width - dwidth * scale) * 0.5f + 0.5f);
+		dy = (int) ((height - dheight * scale) * 0.5f + 0.5f);
 	}
 
 	private void getAttrs(Context context, AttributeSet attrs) {
@@ -89,6 +145,7 @@ public class SvgPathView extends View {
 		this.iconSize *= 0.01f;
 		this.iconColor = typedArray.getColor(R.styleable.iconView_iconColor,
 				Color.BLACK);
+		this.scaleType=typedArray.getInt(R.styleable.iconView_iconScaleType, SCALE_WITH_HEIGHT);
 		typedArray.recycle();
 	}
 
@@ -369,7 +426,7 @@ public class SvgPathView extends View {
 
 	@Override
 	protected void onMeasure(int wms, int hms) {
-		setMeasuredDimension((int)trueSize+1, (int)trueSize+1);
+		setMeasuredDimension((int)width+1, (int)height+1);
 	}
 
 }
