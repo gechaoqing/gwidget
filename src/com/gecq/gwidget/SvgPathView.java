@@ -7,6 +7,7 @@ import com.gwsoft.globalLibrary.gwidget.utils.SvgParserHelper;
 import com.imusic.iting.R;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -25,7 +26,7 @@ public class SvgPathView extends View {
 
 	private String icon;
 	private float iconSize;
-	private int iconColor;
+	private ColorStateList iconColor;
 	private RectF mRectF;
 	private float mDensity;
 	private final float size=120;
@@ -53,28 +54,28 @@ public class SvgPathView extends View {
 	}
 
 	public void setIconPath(String path) {
-		doPath(path);
-		requestLayout();
-		invalidate();
+		this.icon=path;
+		draw();
 	}
 
 	public void setIconPath(int resid) {
-		doPath(resid);
-		requestLayout();
+		this.icon=getResources().getString(resid);
+		draw();
+	}
+	
+	public void setIconColor(int resid){
+		ColorStateList colors=getResources().getColorStateList(resid);
+		mPaint.setColor(colors.getColorForState(getDrawableState(), Color.BLACK));
 		invalidate();
 	}
-
-	private void init() {
-		mPaint = new Paint();
-		mPath = new Path();
-		mRectF = new RectF();
-		mPareser = new SvgParserHelper(icon, 0);
-		mPaint.setColor(this.iconColor);
-		mPaint.setDither(true);
-		mPaint.setStrokeJoin(Paint.Join.ROUND);
-		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setAntiAlias(true);
-		mMatrix = new Matrix();
+	
+	public void setIconColor(String color){
+		mPaint.setColor(Color.parseColor(color));
+		invalidate();
+	}
+	
+	private void draw(){
+		mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
 		doPath();
 		mPath.computeBounds(mRectF, true);
 		float dwidth=mRectF.width();
@@ -124,6 +125,30 @@ public class SvgPathView extends View {
 		mMatrix.setScale(scale, scale);
 		mMatrix.postTranslate(dx, dy);
 		mPath.transform(mMatrix);
+		requestLayout();
+		invalidate();
+	}
+
+	private void init() {
+		mPaint = new Paint();
+		mPath = new Path();
+		mRectF = new RectF();
+		mPareser = new SvgParserHelper(icon, 0);
+		mPaint.setDither(true);
+		mPaint.setStrokeJoin(Paint.Join.ROUND);
+		mPaint.setStrokeCap(Paint.Cap.ROUND);
+		mPaint.setAntiAlias(true);
+		mMatrix = new Matrix();
+		draw();
+	}
+	@Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        if(iconColor!=null&&iconColor.isStateful())
+        {
+        	mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
+        	invalidate();
+        }
 	}
 	
 	private void getDxDySmaller(float dx,float dy,float dwidth,float dheight,float scale){
@@ -143,8 +168,9 @@ public class SvgPathView extends View {
 		this.iconSize = typedArray.getDimension(R.styleable.iconView_iconSize,
 				12.0f * mDensity);
 		this.iconSize *= 0.01f;
-		this.iconColor = typedArray.getColor(R.styleable.iconView_iconColor,
-				Color.BLACK);
+//		this.iconColor = typedArray.getColor(R.styleable.iconView_iconColor,
+//				Color.BLACK);
+		this.iconColor =typedArray.getColorStateList(R.styleable.iconView_iconColor);
 		this.scaleType=typedArray.getInt(R.styleable.iconView_iconScaleType, SCALE_WITH_HEIGHT);
 		typedArray.recycle();
 	}
@@ -154,10 +180,6 @@ public class SvgPathView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		canvas.drawPath(mPath, mPaint);
-	}
-
-	private void doPath(int resid) {
-		doPath(getResources().getString(resid));
 	}
 
 	private void doPath() {
