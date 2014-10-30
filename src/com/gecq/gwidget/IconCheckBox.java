@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 
 public class IconCheckBox extends SvgPathView {
 
-	private boolean checked=true, progressing;
+	private boolean checked, progressing;
 	private CheckedChangedListener checkedChanged;
 
 	private float mCheckedProgress = 0;
@@ -28,6 +28,7 @@ public class IconCheckBox extends SvgPathView {
 
 	private void init() {
 		scaleMatrix = new Matrix();
+		scaleMatrix.setScale(1.0f, 1.0f);
 		if (checked) {
 			mCheckedProgress = 1.0f;
 		}
@@ -58,18 +59,19 @@ public class IconCheckBox extends SvgPathView {
 		checkedPath.mMatrix.postTranslate(checkedPath.dx, checkedPath.dy);
 		checkedPath.mPath.transform(checkedPath.mMatrix);
 	}
+	
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		pathDataSet.mPaint.setAlpha((int) (255 * (1 - mCheckedProgress)));
 		canvas.drawPath(pathDataSet.mPath, pathDataSet.mPaint);
 		checkedPath.mPaint.setAlpha((int) (255 * mCheckedProgress));
-		checkedPath.mMatrix.postScale(mCheckedProgress, mCheckedProgress, width / 2,
+		canvas.save();
+		scaleMatrix.setScale(mCheckedProgress, mCheckedProgress, width / 2,
 				height / 2);
-//		checkedPath.mMatrix.postScale(mCheckedProgress, mCheckedProgress, width / 2,
-//				height / 2);
-//		checkedPath.mPath.transform(scaleMatrix);
+		canvas.concat(scaleMatrix);
 		canvas.drawPath(checkedPath.mPath, checkedPath.mPaint);
+		canvas.restore();
 	}
 
 	private void updateOnProgress(float delt) {

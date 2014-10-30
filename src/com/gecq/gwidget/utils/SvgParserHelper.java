@@ -7,10 +7,14 @@ public class SvgParserHelper {
     private int n;
 
     public SvgParserHelper(CharSequence s, int pos) {
-        this.s = s;
-        this.pos = pos;
-        n = s.length();
-        current = s.charAt(pos);
+    	load(s,pos);
+    }
+    
+    public void load(CharSequence s, int pos){
+    	 this.s = s;
+         this.pos = pos;
+         n = s.length();
+         current = s.charAt(pos);
     }
 
     private char read() {

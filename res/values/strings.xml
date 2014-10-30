@@ -4,4 +4,6 @@
     <string name="desktop_lrc">桌面歌词</string>
     <string name="lockscreen">锁屏</string>
     <string name="equalizer">均衡器</string>
+    
+    <item type="id" name="icon_in_icontextview"/>
 </resources>

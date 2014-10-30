@@ -79,7 +79,7 @@ public class SvgPathView extends View {
 			this.iconColor=ColorStateList.valueOf(Color.BLACK);
 		}
 		this.scaleType=typedArray.getInt(R.styleable.iconView_iconScaleType, SCALE_WITH_HEIGHT);
-		this.checkedColor = typedArray.getColor(R.styleable.iconView_iconCheckedColor, getResources().getColor(R.color.pop_green));
+		this.checkedColor = typedArray.getColor(R.styleable.iconView_iconCheckedColor, getResources().getColor(R.color.green));
 		this.iconChecked = typedArray.getString(R.styleable.iconView_iconChecked);
 		typedArray.recycle();
 		init();
