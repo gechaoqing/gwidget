@@ -12,6 +12,8 @@
             <enum name="padding" value="0" />
             <enum name="match" value="1" />
         </attr>
+        <attr name="isOn" format="boolean" />
+        <attr name="buttonSize" format="float" />
     </declare-styleable>
     <declare-styleable name="radiusImage">
         <attr name="radius" format="dimension" />
@@ -21,8 +23,7 @@
         <attr name="radiusBottomRight" format="dimension" />
         <attr name="borderColor" format="reference|color" />
         <attr name="borderWidth" format="integer" />
-        <attr name="alpha" format="float" />
-        <attr name="src" format="reference|color"/>
+        <attr name="imageAlpha" format="float" />
         <attr name="borderStyle">
             <enum name="outside" value="0"/>
             <enum name="over" value="1" />
@@ -41,11 +42,24 @@
             <enum name="centerCrop" value="0"/>
         </attr>
     </declare-styleable>
-    
     <declare-styleable name="iconView">
-        <attr name="icon" format="reference|string"/>
-        <attr name="iconSize" format="dimension"/>
-        <attr name="iconColor" format="reference|color"/>
+        <attr name="icon" format="reference|string" />
+        <attr name="iconSize" format="dimension" />
+        <attr name="iconColor" format="reference|color" />
+        <attr name="iconCheckedColor" format="reference|color"/>
+        <attr name="iconChecked" format="reference|string"/>
+        <attr name="iconScaleType">
+            <enum name="center" value="0" />
+            <enum name="withWidth" value="1" />
+            <enum name="withHeight" value="2" />
+        </attr>
+        <attr name="iconDir">
+            <enum name="left" value="0" />
+            <enum name="top" value="1" />
+            <enum name="right" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
+        <attr name="iconPadding" format="dimension"/>
     </declare-styleable>
 
 </resources>

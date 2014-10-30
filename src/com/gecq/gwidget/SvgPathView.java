@@ -1,15 +1,10 @@
-package com.gwsoft.globalLibrary.gwidget;
+package com.gecq.gwidget;
 
-
-
-
-import com.gwsoft.globalLibrary.gwidget.utils.SvgParserHelper;
-import com.imusic.iting.R;
+import com.gecq.gwidget.utils.SvgParserHelper;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -20,175 +15,154 @@ import android.view.View;
 
 public class SvgPathView extends View {
 
-	private Path mPath;
-	private Paint mPaint;
-	private SvgParserHelper mPareser;
-
-	private String icon;
-	private float iconSize;
-	private ColorStateList iconColor;
-	private RectF mRectF;
-	private float mDensity;
-	private final float size=120;
-	private float width,height;
-	private int scaleType=SCALE_WITH_HEIGHT;
 	
-	private static final int SCALE_CENTER=0;
-	private static final int SCALE_WITH_WIDTH=1;
-	private static final int SCALE_WITH_HEIGHT=2;
+	protected int checkedColor;
+	protected String iconChecked;
+	
+	protected SvgParserHelper mPareser;
 
-	public SvgPathView(Context context) {
-		super(context);
+	protected String icon;
+	protected float iconSize;
+	protected ColorStateList iconColor;
+	protected float mDensity;
+	protected final float size=120;
+	protected int scaleType=SCALE_WITH_HEIGHT;
+	protected float width,height;
+	
+	protected PathDataSet pathDataSet;
+	
+	protected static final int SCALE_CENTER=0;
+	protected static final int SCALE_WITH_WIDTH=1;
+	protected static final int SCALE_WITH_HEIGHT=2;
+	
+	protected class PathDataSet{
+		protected Path mPath;
+		protected Paint mPaint;
+		protected Matrix mMatrix;
+		protected RectF mRectF;
+		protected float scale=1.0f;
+		protected float dx=0,dy=0;
+		protected PathDataSet(){
+			mPaint = new Paint();
+			mPaint=roundPaint(mPaint);
+			mMatrix = new Matrix();
+			mPath = new Path();
+			mRectF = new RectF();
+		}
+	}
+	
+	public SvgPathView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		getAttrs(context, attrs);
 	}
 
 	public SvgPathView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		getAttrs(context, attrs);
+	}
+
+	public SvgPathView(Context context) {
+		super(context);
+	}
+	
+	private void getAttrs(Context context, AttributeSet attrs) {
+		pathDataSet = new PathDataSet();
+		TypedArray typedArray = context.obtainStyledAttributes(attrs,
+				R.styleable.iconView);
+		mDensity = context.getResources().getDisplayMetrics().density;
+		icon = typedArray.getString(R.styleable.iconView_icon);
+		this.iconSize = typedArray.getDimension(R.styleable.iconView_iconSize,
+				12.0f * mDensity);
+		this.iconSize *= 0.01f;
+		this.iconColor =typedArray.getColorStateList(R.styleable.iconView_iconColor);
+		if(this.iconColor==null){
+			this.iconColor=ColorStateList.valueOf(Color.BLACK);
+		}
+		this.scaleType=typedArray.getInt(R.styleable.iconView_iconScaleType, SCALE_WITH_HEIGHT);
+		this.checkedColor = typedArray.getColor(R.styleable.iconView_iconCheckedColor, getResources().getColor(R.color.pop_green));
+		this.iconChecked = typedArray.getString(R.styleable.iconView_iconChecked);
+		typedArray.recycle();
 		init();
 	}
-
-	public SvgPathView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		getAttrs(context, attrs);
-		init();
-	}
-
-	public void setIconPath(String path) {
-		this.icon=path;
-		draw();
-	}
-
-	public void setIconPath(int resid) {
-		this.icon=getResources().getString(resid);
-		draw();
-	}
 	
-	public void setIconColor(int resid){
-		ColorStateList colors=getResources().getColorStateList(resid);
-		mPaint.setColor(colors.getColorForState(getDrawableState(), Color.BLACK));
-		invalidate();
-	}
-	
-	public void setIconColor(String color){
-		mPaint.setColor(Color.parseColor(color));
-		invalidate();
-	}
-	
-	private void draw(){
-		mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
-		doPath();
-		mPath.computeBounds(mRectF, true);
-		float dwidth=mRectF.width();
-		float dheight=mRectF.height();
+	private void init(){
+		mPareser = new SvgParserHelper(icon, 0);
 		width=height=size*iconSize;
-		float scale=1.0f;
-		float dx=0,dy=0;
+		pathDataSet=computeDatas(pathDataSet,icon);
+	}
+	
+	protected Paint roundPaint(Paint mPaint){
+		mPaint.setDither(true);
+		mPaint.setStrokeJoin(Paint.Join.ROUND);
+		mPaint.setStrokeCap(Paint.Cap.ROUND);
+		mPaint.setAntiAlias(true);
+		return mPaint;
+	}
+	
+	
+	protected PathDataSet computeDatas(PathDataSet pds,String icon){
+		pds.mPath=doPath(pds.mPath,icon);
+		pds.mPath.computeBounds(pds.mRectF, true);
+//		width=height=size*iconSize;
+		float dwidth=pds.mRectF.width();
+		float dheight=pds.mRectF.height();
 		switch (scaleType) {
 		case SCALE_CENTER:
 			if(width<dwidth||height<dheight)
 			{
-				scale=Math.min(width/dwidth,height/dheight);
-				getDxDyBigger(dx, dy, dwidth, dheight, scale);
+				pds.scale=Math.min(width/dwidth,height/dheight);
+				getDxDyBigger(pds,dwidth, dheight);
 			}else{
-				scale=Math.min(dwidth/width,dheight/height);
-				getDxDySmaller(dx,dy,dwidth,dheight,scale);
+				pds.scale=Math.min(dwidth/width,dheight/height);
+				getDxDySmaller(pds,dwidth,dheight);
 			}
 			break;
 		case SCALE_WITH_HEIGHT:
 			if(height<dheight)
 			{
-				scale=height/dheight;
-				width=dwidth*scale;
-				getDxDyBigger(dx, dy, dwidth, dheight, scale);
+				pds.scale=height/dheight;
+				width=dwidth*pds.scale;
+				getDxDyBigger(pds,dwidth, dheight);
 			}else{
-				scale=dheight/height;
-				width=dwidth/scale;
-				getDxDySmaller(dx,dy,dwidth,dheight,scale);
+				pds.scale=dheight/height;
+				width=dwidth/pds.scale;
+				getDxDySmaller(pds,dwidth,dheight);
 			}
 			
 			break;
 		case SCALE_WITH_WIDTH:
 			if(width<dwidth)
 			{
-				scale=width/dwidth;
-				height=dheight*scale;
-				getDxDyBigger(dx, dy, dwidth, dheight, scale);
+				pds.scale=width/dwidth;
+				height=dheight*pds.scale;
+				getDxDyBigger(pds,dwidth, dheight);
 				
 			}else{
-				scale=dwidth/width;
-				height=dheight/scale;
-				getDxDySmaller(dx,dy,dwidth,dheight,scale);
-				
+				pds.scale=dwidth/width;
+				height=dheight/pds.scale;
+				getDxDySmaller(pds,dwidth,dheight);
 			}
 			break;
 		}
-		mMatrix.setScale(scale, scale);
-		mMatrix.postTranslate(dx, dy);
-		mPath.transform(mMatrix);
-		requestLayout();
-		invalidate();
-	}
-
-	private void init() {
-		mPaint = new Paint();
-		mPath = new Path();
-		mRectF = new RectF();
-		mPareser = new SvgParserHelper(icon, 0);
-		mPaint.setDither(true);
-		mPaint.setStrokeJoin(Paint.Join.ROUND);
-		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setAntiAlias(true);
-		mMatrix = new Matrix();
-		draw();
-	}
-	@Override
-    protected void drawableStateChanged() {
-        super.drawableStateChanged();
-        if(iconColor!=null&&iconColor.isStateful())
-        {
-        	mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
-        	invalidate();
-        }
+		return pds;
 	}
 	
-	private void getDxDySmaller(float dx,float dy,float dwidth,float dheight,float scale){
-		dx = (int) ((dwidth - width * scale) * 0.5f + 0.5f);
-		dy = (int) ((dheight - height * scale) * 0.5f + 0.5f);
+	private void getDxDySmaller(PathDataSet pds,float dwidth,float dheight){
+		pds.dx = (int) ((dwidth - width * pds.scale) * 0.5f + 0.5f);
+		pds.dy = (int) ((dheight - height * pds.scale) * 0.5f + 0.5f);
 	}
-	private void getDxDyBigger(float dx,float dy,float dwidth,float dheight,float scale){
-		dx = (int) ((width - dwidth * scale) * 0.5f + 0.5f);
-		dy = (int) ((height - dheight * scale) * 0.5f + 0.5f);
+	private void getDxDyBigger(PathDataSet pds,float dwidth,float dheight){
+		pds.dx = (int) ((width - dwidth * pds.scale) * 0.5f + 0.5f);
+		pds.dy = (int) ((height - dheight * pds.scale) * 0.5f + 0.5f);
 	}
-
-	private void getAttrs(Context context, AttributeSet attrs) {
-		TypedArray typedArray = context.obtainStyledAttributes(attrs,
-				R.styleable.iconView);
-		mDensity = context.getResources().getDisplayMetrics().density;
-		this.icon = typedArray.getString(R.styleable.iconView_icon);
-		this.iconSize = typedArray.getDimension(R.styleable.iconView_iconSize,
-				12.0f * mDensity);
-		this.iconSize *= 0.01f;
-//		this.iconColor = typedArray.getColor(R.styleable.iconView_iconColor,
-//				Color.BLACK);
-		this.iconColor =typedArray.getColorStateList(R.styleable.iconView_iconColor);
-		this.scaleType=typedArray.getInt(R.styleable.iconView_iconScaleType, SCALE_WITH_HEIGHT);
-		typedArray.recycle();
+	
+	protected int C(String str) {
+		return Color.parseColor(str);
 	}
 
-	Matrix mMatrix;
-
-	@Override
-	protected void onDraw(Canvas canvas) {
-		canvas.drawPath(mPath, mPaint);
-	}
-
-	private void doPath() {
-		doPath(this.icon);
-	}
-
-	private void doPath(String s) {
+	protected Path doPath(Path mPath,String s) {
 		if (s == null) {
-			return;
+			return mPath;
 		}
 //		System.out.println("==============================================");
 		int n = s.length();
@@ -389,7 +363,7 @@ public class SvgPathView extends View {
 				if (Float.isNaN(y)) {
 					// Log.e(TAG,
 					// "Bad path coords for "+((char)cmd)+" path segment");
-					return;
+					return mPath;
 				}
 				if (cmd == 'q') {
 					x += lastX;
@@ -416,7 +390,7 @@ public class SvgPathView extends View {
 				if (Float.isNaN(y)) {
 					// Log.e(TAG,
 					// "Bad path coords for "+((char)cmd)+" path segment");
-					return;
+					return mPath;
 				}
 				if (cmd == 't') {
 					x += lastX;
@@ -438,6 +412,7 @@ public class SvgPathView extends View {
 			mPareser.skipWhitespace();
 
 		}
+		return mPath;
 	}
 
 	private static void drawArc(Path p, float lastX, float lastY, float x,
@@ -445,10 +420,5 @@ public class SvgPathView extends View {
 		// todo - not implemented yet, may be very hard to do using Android
 		// drawing facilities.
 	}
-
-	@Override
-	protected void onMeasure(int wms, int hms) {
-		setMeasuredDimension((int)width+1, (int)height+1);
-	}
-
+	
 }

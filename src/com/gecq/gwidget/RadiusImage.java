@@ -89,7 +89,7 @@ public class RadiusImage extends ImageView {
 				0);
 		setScaleType(sScaleTypeArray[index]);
 		style.src = getDrawable();
-		style.alpha = typedArray.getFloat(R.styleable.radiusImage_alpha, 1);
+		style.alpha = typedArray.getFloat(R.styleable.radiusImage_imageAlpha, 1);
 		typedArray.recycle();
 	}
 
