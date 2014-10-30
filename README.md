@@ -52,11 +52,11 @@ RadiusImage:使用说明
 ### 2.2.图例
 ![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage1.jpg) <br>
 ![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage2.jpg) 
-3.SvgPathView
+3.IconView
 ===========
-SvgPathView:使用说明
+IconView:使用说明
 ----------
-	继承View，实现通过SVG Path字符串绘制图形/图标
+	继承SvgPathView->View，实现通过SVG Path字符串绘制图形/图标
 ### 3.1.Layout文件中定义样式
 	gwidget:icon      ------SVG Path 字符串
 	gwidget:iconColor ------图形/图标颜色
