@@ -6,7 +6,13 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+/****
+ * IconTextView
+ * <br> Copyright (C) 2014 <b>Gechaoqing</b>
+ * @author Gechaoqing
+ * @since 2014-10-20
+ * 
+ */
 public class IconTextView extends RelativeLayout {
 
 	private TextView mTextView;

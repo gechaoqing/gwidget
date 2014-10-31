@@ -16,7 +16,13 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-
+/****
+ * RadiusImage
+ * <br> Copyright (C) 2014 <b>Gechaoqing</b>
+ * @author Gechaoqing
+ * @since 2014-10-20
+ * 
+ */
 public class RadiusImage extends ImageView {
 
 	private Styles style;

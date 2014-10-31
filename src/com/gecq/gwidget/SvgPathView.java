@@ -1,3 +1,4 @@
+
 package com.gecq.gwidget;
 
 import com.gecq.gwidget.utils.SvgParserHelper;
@@ -12,7 +13,13 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
-
+/****
+ * SvgPathView
+ * <br> Copyright (C) 2014 <b>Gechaoqing</b>
+ * @author Gechaoqing
+ * @since 2014-10-20
+ * 
+ */
 public class SvgPathView extends View {
 
 	protected SvgParserHelper mPareser;

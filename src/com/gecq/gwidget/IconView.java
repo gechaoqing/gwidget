@@ -5,7 +5,13 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
-
+/****
+ * IconView
+ * <br> Copyright (C) 2014 <b>Gechaoqing</b>
+ * @author Gechaoqing
+ * @since 2014-10-20
+ * 
+ */
 public class IconView extends SvgPathView {
 
 	public IconView(Context context) {

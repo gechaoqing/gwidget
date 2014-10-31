@@ -10,7 +10,13 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
+/****
+ * SwitchButton
+ * <br> Copyright (C) 2014 <b>Gechaoqing</b>
+ * @author Gechaoqing
+ * @since 2014-10-20
+ * 
+ */
 public class SwitchButton extends View {
 
 	private RectF innerRect;
