@@ -90,7 +90,7 @@ public class IconCheckBox extends SvgPathView implements android.view.View.OnCli
 	}
 	
 	private int getDefaultCheckedColor(){
-		return getResources().getColor(R.color.pink);
+		return Color.GREEN;
 	}
 
 	private void setChecked() {

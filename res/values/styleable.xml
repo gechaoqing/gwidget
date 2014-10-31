@@ -46,6 +46,13 @@
         <attr name="icon" format="reference|string" />
         <attr name="iconSize" format="dimension" />
         <attr name="iconColor" format="reference|color" />
+        <attr name="iconGravity">
+            <enum name="center" value="1"/>
+            <enum name="left" value="2"/>
+            <enum name="top" value="4"/>
+            <enum name="right" value="8"/>
+            <enum name="bottom" value="16"/>
+        </attr>
         <attr name="iconScaleType">
             <enum name="center" value="0" />
             <enum name="withWidth" value="1" />

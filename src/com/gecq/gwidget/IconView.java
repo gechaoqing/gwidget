@@ -72,12 +72,38 @@ public class IconView extends SvgPathView {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		canvas.save();
+		canvas.translate(getPaddingLeft()+dx, getPaddingTop()+dy);
 		canvas.drawPath(pathDataSet.mPath, pathDataSet.mPaint);
+		canvas.restore();
 	}
 	
+	private float dx=0,dy=0;
 
 	@Override
-	protected void onMeasure(int wms, int hms) {
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        if (widthMode == MeasureSpec.EXACTLY) {
+        	if(width<widthSize)
+        	{
+        		dx=(widthSize-width)/2;
+        	}
+            width = widthSize;
+        }
+        if(heightMode == MeasureSpec.EXACTLY){
+        	if(height<heightSize)
+        	{
+        		dy=(heightSize-height)/2;
+        	}
+        	height=heightSize;
+        }
+        
+        width+=getPaddingLeft()+getPaddingRight();
+        height+=getPaddingTop()+getPaddingBottom();
 		setMeasuredDimension((int)width+1, (int)height+1);
 	}
 
