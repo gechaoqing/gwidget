@@ -1,14 +1,13 @@
 package com.gecq.gwidget;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
+import android.view.View;
 
-public class IconCheckBox extends SvgPathView {
+public class IconCheckBox extends SvgPathView implements android.view.View.OnClickListener {
 
 	private boolean checked, progressing;
 	private CheckedChangedListener checkedChanged;
@@ -24,6 +23,7 @@ public class IconCheckBox extends SvgPathView {
 	public IconCheckBox(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
+		setOnClickListener(this);
 	}
 
 	private void init() {
@@ -82,7 +82,6 @@ public class IconCheckBox extends SvgPathView {
 		if (this.mCheckedProgress > 1) {
 			this.mCheckedProgress = 1;
 		}
-		System.out.println(mCheckedProgress + " ==========");
 		if (this.mCheckedProgress == 1 || this.mCheckedProgress == 0) {
 			progressing = false;
 			checked = (mCheckedProgress == 1);
@@ -120,37 +119,7 @@ public class IconCheckBox extends SvgPathView {
 			}
 		}, 15);
 	}
-
-	@SuppressLint("ClickableViewAccessibility")
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		if (this.progressing) {
-			return true;
-		}
-		int action = event.getAction();
-		switch (action) {
-		case MotionEvent.ACTION_CANCEL:
-			if (progressing) {
-				if (checked) {
-					goUnchecked();
-				} else {
-					goChecked();
-				}
-			}
-
-			break;
-		case MotionEvent.ACTION_UP:
-			progressing = true;
-			if (checked) {
-				goUnchecked();
-			} else {
-				goChecked();
-			}
-			break;
-		}
-		invalidate();
-		return true;
-	}
+	
 
 	public interface CheckedChangedListener {
 		void checkedChanged(boolean isChecked);
@@ -159,5 +128,19 @@ public class IconCheckBox extends SvgPathView {
 	@Override
 	protected void onMeasure(int wms, int hms) {
 		setMeasuredDimension((int) width + 1, (int) height + 1);
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (this.progressing) {
+			return;
+		}
+		progressing = true;
+		if (checked) {
+			goUnchecked();
+		} else {
+			goChecked();
+		}
+		invalidate();
 	}
 }
