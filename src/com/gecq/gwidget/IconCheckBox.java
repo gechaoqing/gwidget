@@ -37,9 +37,28 @@ public class IconCheckBox extends SvgPathView implements android.view.View.OnCli
 	}
 
 	public void setChecked(boolean isChecked) {
+		if(this.checked==isChecked)return;
 		this.checked = isChecked;
+		if (checked) {
+			mCheckedProgress = 1.0f;
+		}else{
+			mCheckedProgress = 0.0f;
+		}
 		requestLayout();
 		postInvalidate();
+	}
+	public void setChecking(boolean isChecked){
+		if(this.checked!=isChecked){
+			progressing=true;
+			if(isChecked){
+				goChecked();
+			}else{
+				goUnchecked();
+			}
+		}
+	}
+	public boolean isChecked(){
+		return this.checked;
 	}
 
 	private void setUnchecked() {
