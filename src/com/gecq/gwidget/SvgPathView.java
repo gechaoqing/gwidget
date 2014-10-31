@@ -15,10 +15,6 @@ import android.view.View;
 
 public class SvgPathView extends View {
 
-	
-	protected int checkedColor;
-	protected String iconChecked;
-	
 	protected SvgParserHelper mPareser;
 
 	protected String icon;
@@ -79,16 +75,13 @@ public class SvgPathView extends View {
 			this.iconColor=ColorStateList.valueOf(Color.BLACK);
 		}
 		this.scaleType=typedArray.getInt(R.styleable.iconView_iconScaleType, SCALE_WITH_HEIGHT);
-		this.checkedColor = typedArray.getColor(R.styleable.iconView_iconCheckedColor, getResources().getColor(R.color.green));
-		this.iconChecked = typedArray.getString(R.styleable.iconView_iconChecked);
 		typedArray.recycle();
 		init();
 	}
 	
 	private void init(){
-		mPareser = new SvgParserHelper(icon, 0);
+		mPareser = new SvgParserHelper();
 		width=height=size*iconSize;
-		pathDataSet=computeDatas(pathDataSet,icon);
 	}
 	
 	protected Paint roundPaint(Paint mPaint){
@@ -103,7 +96,6 @@ public class SvgPathView extends View {
 	protected PathDataSet computeDatas(PathDataSet pds,String icon){
 		pds.mPath=doPath(pds.mPath,icon);
 		pds.mPath.computeBounds(pds.mRectF, true);
-//		width=height=size*iconSize;
 		float dwidth=pds.mRectF.width();
 		float dheight=pds.mRectF.height();
 		switch (scaleType) {

@@ -44,6 +44,8 @@ public class IconView extends SvgPathView {
 	}
 	
 	private void draw(){
+		mPareser.load(icon, 0);
+		pathDataSet= computeDatas(pathDataSet, icon);
 		pathDataSet.mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
 		pathDataSet.mMatrix.setScale(pathDataSet.scale, pathDataSet.scale);
 		pathDataSet.mMatrix.postTranslate(pathDataSet.dx, pathDataSet.dy);

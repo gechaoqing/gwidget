@@ -10,6 +10,8 @@ public class SvgParserHelper {
     	load(s,pos);
     }
     
+    public SvgParserHelper(){}
+    
     public void load(CharSequence s, int pos){
     	 this.s = s;
          this.pos = pos;

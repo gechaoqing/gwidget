@@ -46,8 +46,6 @@
         <attr name="icon" format="reference|string" />
         <attr name="iconSize" format="dimension" />
         <attr name="iconColor" format="reference|color" />
-        <attr name="iconCheckedColor" format="reference|color"/>
-        <attr name="iconChecked" format="reference|string"/>
         <attr name="iconScaleType">
             <enum name="center" value="0" />
             <enum name="withWidth" value="1" />
@@ -60,6 +58,10 @@
             <enum name="bottom" value="3" />
         </attr>
         <attr name="iconPadding" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="iconCheckBox">
+        <attr name="iconCheckedColor" format="reference|color"/>
+        <attr name="iconChecked" format="reference|string"/>
     </declare-styleable>
 
 </resources>
