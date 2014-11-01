@@ -104,7 +104,7 @@ public class IconView extends SvgPathView {
         
         width+=getPaddingLeft()+getPaddingRight();
         height+=getPaddingTop()+getPaddingBottom();
-		setMeasuredDimension((int)width+1, (int)height+1);
+		setMeasuredDimension((int)(width+0.5f), (int)height+1);
 	}
 
 }
