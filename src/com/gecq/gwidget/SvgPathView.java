@@ -1,4 +1,3 @@
-
 package com.gecq.gwidget;
 
 import com.gecq.gwidget.utils.SvgParserHelper;
@@ -13,9 +12,11 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
+
 /****
- * SvgPathView
- * <br> Copyright (C) 2014 <b>Gechaoqing</b>
+ * SvgPathView <br>
+ * Copyright (C) 2014 <b>Gechaoqing</b>
+ * 
  * @author Gechaoqing
  * @since 2014-10-20
  * 
@@ -28,32 +29,33 @@ public class SvgPathView extends View {
 	protected float iconSize;
 	protected ColorStateList iconColor;
 	protected float mDensity;
-	protected final float size=120;
-	protected int scaleType=SCALE_WITH_HEIGHT;
-	protected float width,height;
-	
+	protected final float size = 120;
+	protected int scaleType = SCALE_CENTER;
+	protected float width, height;
+
 	protected PathDataSet pathDataSet;
-	
-	protected static final int SCALE_CENTER=0;
-	protected static final int SCALE_WITH_WIDTH=1;
-	protected static final int SCALE_WITH_HEIGHT=2;
-	
-	protected class PathDataSet{
+
+	protected static final int SCALE_CENTER = 0;
+	protected static final int SCALE_WITH_WIDTH = 1;
+	protected static final int SCALE_WITH_HEIGHT = 2;
+
+	protected class PathDataSet {
 		protected Path mPath;
 		protected Paint mPaint;
 		protected Matrix mMatrix;
 		protected RectF mRectF;
-		protected float scale=1.0f;
-		protected float dx=0,dy=0;
-		protected PathDataSet(){
+		protected float scale = 1.0f;
+		protected float dx = 0, dy = 0;
+
+		protected PathDataSet() {
 			mPaint = new Paint();
-			mPaint=roundPaint(mPaint);
+			mPaint = roundPaint(mPaint);
 			mMatrix = new Matrix();
 			mPath = new Path();
 			mRectF = new RectF();
 		}
 	}
-	
+
 	public SvgPathView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		getAttrs(context, attrs);
@@ -67,7 +69,7 @@ public class SvgPathView extends View {
 	public SvgPathView(Context context) {
 		super(context);
 	}
-	
+
 	private void getAttrs(Context context, AttributeSet attrs) {
 		pathDataSet = new PathDataSet();
 		TypedArray typedArray = context.obtainStyledAttributes(attrs,
@@ -77,93 +79,70 @@ public class SvgPathView extends View {
 		this.iconSize = typedArray.getDimension(R.styleable.iconView_iconSize,
 				12.0f * mDensity);
 		this.iconSize *= 0.01f;
-		this.iconColor =typedArray.getColorStateList(R.styleable.iconView_iconColor);
-		if(this.iconColor==null){
-			this.iconColor=ColorStateList.valueOf(Color.BLACK);
+		this.iconColor = typedArray
+				.getColorStateList(R.styleable.iconView_iconColor);
+		if (this.iconColor == null) {
+			this.iconColor = ColorStateList.valueOf(Color.BLACK);
 		}
-		this.scaleType=typedArray.getInt(R.styleable.iconView_iconScaleType, SCALE_WITH_HEIGHT);
+		this.scaleType = typedArray.getInt(R.styleable.iconView_iconScaleType,
+				SCALE_WITH_HEIGHT);
 		typedArray.recycle();
 		init();
 	}
-	
-	private void init(){
+
+	private void init() {
 		mPareser = new SvgParserHelper();
-		width=height=size*iconSize;
+		width = height = size * iconSize;
 	}
-	
-	protected Paint roundPaint(Paint mPaint){
+
+	protected Paint roundPaint(Paint mPaint) {
 		mPaint.setDither(true);
 		mPaint.setStrokeJoin(Paint.Join.ROUND);
 		mPaint.setStrokeCap(Paint.Cap.ROUND);
 		mPaint.setAntiAlias(true);
 		return mPaint;
 	}
-	
-	
-	protected PathDataSet computeDatas(PathDataSet pds,String icon){
-		pds.mPath=doPath(pds.mPath,icon);
+
+	protected PathDataSet computeDatas(PathDataSet pds, String icon) {
+		pds.mPath = doPath(pds.mPath, icon);
 		pds.mPath.computeBounds(pds.mRectF, true);
-		float dwidth=pds.mRectF.width();
-		float dheight=pds.mRectF.height();
+		float dwidth = pds.mRectF.width();
+		float dheight = pds.mRectF.height();
 		switch (scaleType) {
 		case SCALE_CENTER:
-			if(width<dwidth||height<dheight)
-			{
-				pds.scale=Math.min(width/dwidth,height/dheight);
-				getDxDyBigger(pds,dwidth, dheight);
-			}else{
-				pds.scale=Math.min(dwidth/width,dheight/height);
-				getDxDySmaller(pds,dwidth,dheight);
-			}
+			pds.scale = Math.min(width / dwidth, height / dheight);
+			getDxDyBigger(pds, dwidth, dheight);
 			break;
 		case SCALE_WITH_HEIGHT:
-			if(height<dheight)
-			{
-				pds.scale=height/dheight;
-				width=dwidth*pds.scale;
-				getDxDyBigger(pds,dwidth, dheight);
-			}else{
-				pds.scale=dheight/height;
-				width=dwidth/pds.scale;
-				getDxDySmaller(pds,dwidth,dheight);
-			}
-			
+			pds.scale = height / dheight;
+			width = dwidth * pds.scale;
+			getDxDyBigger(pds, dwidth, dheight);
+
 			break;
 		case SCALE_WITH_WIDTH:
-			if(width<dwidth)
-			{
-				pds.scale=width/dwidth;
-				height=dheight*pds.scale;
-				getDxDyBigger(pds,dwidth, dheight);
-				
-			}else{
-				pds.scale=dwidth/width;
-				height=dheight/pds.scale;
-				getDxDySmaller(pds,dwidth,dheight);
-			}
+			pds.scale = width / dwidth;
+			height = dheight * pds.scale;
+			getDxDyBigger(pds, dwidth, dheight);
+
 			break;
 		}
 		return pds;
 	}
-	
-	private void getDxDySmaller(PathDataSet pds,float dwidth,float dheight){
-		pds.dx = (int) ((dwidth - width * pds.scale) * 0.5f + 0.5f);
-		pds.dy = (int) ((dheight - height * pds.scale) * 0.5f + 0.5f);
-	}
-	private void getDxDyBigger(PathDataSet pds,float dwidth,float dheight){
+
+	private void getDxDyBigger(PathDataSet pds, float dwidth, float dheight) {
 		pds.dx = (int) ((width - dwidth * pds.scale) * 0.5f + 0.5f);
 		pds.dy = (int) ((height - dheight * pds.scale) * 0.5f + 0.5f);
 	}
-	
+
 	protected int C(String str) {
 		return Color.parseColor(str);
 	}
 
-	protected Path doPath(Path mPath,String s) {
+	protected Path doPath(Path mPath, String s) {
 		if (s == null) {
 			return mPath;
 		}
-//		System.out.println("==============================================");
+		// System.out.println("==============================================");
 		int n = s.length();
 		mPareser.skipWhitespace();
 		float lastX = 0;
@@ -214,14 +193,16 @@ public class SvgPathView extends View {
 					subPathStartX += x;
 					subPathStartY += y;
 					mPath.rMoveTo(x, y);
-//					System.out.println("mPath.rMoveTo(" + x + "f," + y + "f);");
+					// System.out.println("mPath.rMoveTo(" + x + "f," + y +
+					// "f);");
 					lastX += x;
 					lastY += y;
 				} else {
 					subPathStartX = x;
 					subPathStartY = y;
 					mPath.moveTo(x, y);
-//					System.out.println("mPath.moveTo(" + x + "f," + y + "f);");
+					// System.out.println("mPath.moveTo(" + x + "f," + y +
+					// "f);");
 					lastX = x;
 					lastY = y;
 				}
@@ -231,9 +212,9 @@ public class SvgPathView extends View {
 			case 'z': {
 				mPath.close();
 				mPath.moveTo(subPathStartX, subPathStartY);
-//				System.out.println("mPath.close();");
-//				System.out.println("mPath.moveTo(" + subPathStartX + "f,"
-//						+ subPathStartY + "f);");
+				// System.out.println("mPath.close();");
+				// System.out.println("mPath.moveTo(" + subPathStartX + "f,"
+				// + subPathStartY + "f);");
 
 				lastX = subPathStartX;
 				lastY = subPathStartY;
@@ -248,7 +229,8 @@ public class SvgPathView extends View {
 				float y = mPareser.nextFloat();
 				if (cmd == 'l') {
 					mPath.rLineTo(x, y);
-//					System.out.println("mPath.rLineTo(" + x + "f," + y + "f);");
+					// System.out.println("mPath.rLineTo(" + x + "f," + y +
+					// "f);");
 					lastX += x;
 					lastY += y;
 				} else {
@@ -263,12 +245,12 @@ public class SvgPathView extends View {
 				float x = mPareser.nextFloat();
 				if (cmd == 'h') {
 					mPath.rLineTo(x, 0);
-//					System.out.println("mPath.rLineTo(" + x + "f," + "0);");
+					// System.out.println("mPath.rLineTo(" + x + "f," + "0);");
 					lastX += x;
 				} else {
 					mPath.lineTo(x, lastY);
-//					System.out.println("mPath.lineTo(" + x + "f," + lastY
-//							+ "f);");
+					// System.out.println("mPath.lineTo(" + x + "f," + lastY
+					// + "f);");
 					lastX = x;
 				}
 				break;
@@ -278,12 +260,12 @@ public class SvgPathView extends View {
 				float y = mPareser.nextFloat();
 				if (cmd == 'v') {
 					mPath.rLineTo(0, y);
-//					System.out.println("mPath.rLineTo(0," + y + "f);");
+					// System.out.println("mPath.rLineTo(0," + y + "f);");
 					lastY += y;
 				} else {
 					mPath.lineTo(lastX, y);
-//					System.out.println("mPath.lineTo(" + lastX + "f," + y
-//							+ "f);");
+					// System.out.println("mPath.lineTo(" + lastX + "f," + y
+					// + "f);");
 					lastY = y;
 				}
 				break;
@@ -306,8 +288,8 @@ public class SvgPathView extends View {
 					y += lastY;
 				}
 				mPath.cubicTo(x1, y1, x2, y2, x, y);
-//				System.out.println("mPath.cubicTo(" + x1 + "f," + y1 + "f,"
-//						+ x2 + "f," + y2 + "f," + x + "f," + y + "f);");
+				// System.out.println("mPath.cubicTo(" + x1 + "f," + y1 + "f,"
+				// + x2 + "f," + y2 + "f," + x + "f," + y + "f);");
 				lastX1 = x2;
 				lastY1 = y2;
 				lastX = x;
@@ -330,8 +312,8 @@ public class SvgPathView extends View {
 				float x1 = 2 * lastX - lastX1;
 				float y1 = 2 * lastY - lastY1;
 				mPath.cubicTo(x1, y1, x2, y2, x, y);
-//				System.out.println("mPath.cubicTo(" + x1 + "f," + y1 + "f,"
-//						+ x2 + "f," + y2 + "f," + x + "f," + y + "f);");
+				// System.out.println("mPath.cubicTo(" + x1 + "f," + y1 + "f,"
+				// + x2 + "f," + y2 + "f," + x + "f," + y + "f);");
 				lastX1 = x2;
 				lastY1 = y2;
 				lastX = x;
@@ -371,8 +353,9 @@ public class SvgPathView extends View {
 					y1 += lastY;
 				}
 				mPath.quadTo(x1, y1, x, y);
-//				System.out.println("mPath.quadTo(" + x1 + "f," + y1 + "f," + x
-//						+ "f," + y + "f);");
+				// System.out.println("mPath.quadTo(" + x1 + "f," + y1 + "f," +
+				// x
+				// + "f," + y + "f);");
 				lastX1 = x1;
 				lastY1 = y1;
 				lastX = x;
@@ -396,8 +379,9 @@ public class SvgPathView extends View {
 					y += lastY;
 				}
 				mPath.quadTo(x1, y1, x, y);
-//				System.out.println("mPath.quadTo(" + x1 + "f," + y1 + "f," + x
-//						+ "f," + y + "f);");
+				// System.out.println("mPath.quadTo(" + x1 + "f," + y1 + "f," +
+				// x
+				// + "f," + y + "f);");
 				lastX1 = x1;
 				lastY1 = y1;
 				lastX = x;
@@ -419,5 +403,5 @@ public class SvgPathView extends View {
 		// todo - not implemented yet, may be very hard to do using Android
 		// drawing facilities.
 	}
-	
+
 }
