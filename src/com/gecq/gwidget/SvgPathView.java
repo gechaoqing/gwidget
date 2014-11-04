@@ -139,6 +139,9 @@ public class SvgPathView extends View {
 	}
 
 	protected Path doPath(Path mPath, String s) {
+		if(mPath!=null){
+			mPath.reset();
+		}
 		if (s == null) {
 			return mPath;
 		}
