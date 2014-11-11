@@ -29,9 +29,9 @@ public class IconTextView extends RelativeLayout {
 	}
 	
 	private void create(Context context, AttributeSet attrs){
-		TypedArray ta=context.obtainStyledAttributes(R.styleable.iconView);
-//		this.iconDir=ta.getInt(R.styleable.iconView_iconDir, DIR_LEFT);
-//		this.iconPadding=ta.getDimension(R.styleable.iconView_iconPadding, 5.0f);
+		TypedArray ta=context.obtainStyledAttributes(attrs,R.styleable.iconView);
+		this.iconDir=ta.getInt(R.styleable.iconView_iconDir, DIR_LEFT);
+		this.iconPadding=ta.getDimension(R.styleable.iconView_iconPadding, 5.0f);
 		ta.recycle();
 		mTextView=new TextView(context,attrs);
 		mTextView.setPadding(0, 0, 0, 0);
