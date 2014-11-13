@@ -8,22 +8,25 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.view.View;
+
 /****
- * IconCheckBox
- * <br> Copyright (C) 2014 <b>Gechaoqing</b>
+ * IconCheckBox <br>
+ * Copyright (C) 2014 <b>Gechaoqing</b>
+ * 
  * @author Gechaoqing
  * @since 2014-10-20
  * 
  */
-public class IconCheckBox extends SvgPathView implements android.view.View.OnClickListener {
+public class IconCheckBox extends SvgPathView implements
+		android.view.View.OnClickListener {
 
 	private boolean checked, progressing;
 	private CheckedChangedListener checkedChanged;
 
 	private float mCheckedProgress = 0;
-	private PathDataSet checkedPath;
+	private PathDataSet checkedPath, pathDataSet;
 	private Matrix scaleMatrix;
-	
+
 	private ColorStateList checkedColor;
 	private String iconChecked;
 
@@ -33,12 +36,15 @@ public class IconCheckBox extends SvgPathView implements android.view.View.OnCli
 
 	public IconCheckBox(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		TypedArray ta=getResources().obtainAttributes(attrs, R.styleable.iconCheckBox);
-		this.checkedColor=ta.getColorStateList(R.styleable.iconCheckBox_iconCheckedColor);
-		if(this.checkedColor==null){
-			this.checkedColor=ColorStateList.valueOf(getDefaultCheckedColor());
+		TypedArray ta = getResources().obtainAttributes(attrs,
+				R.styleable.iconCheckBox);
+		this.checkedColor = ta
+				.getColorStateList(R.styleable.iconCheckBox_iconCheckedColor);
+		if (this.checkedColor == null) {
+			this.checkedColor = ColorStateList
+					.valueOf(getDefaultCheckedColor());
 		}
-		this.iconChecked=ta.getString(R.styleable.iconCheckBox_iconChecked);
+		this.iconChecked = ta.getString(R.styleable.iconCheckBox_iconChecked);
 		ta.recycle();
 		init();
 		setOnClickListener(this);
@@ -55,54 +61,51 @@ public class IconCheckBox extends SvgPathView implements android.view.View.OnCli
 	}
 
 	public void setChecked(boolean isChecked) {
-		if(this.checked==isChecked)return;
+		if (this.checked == isChecked)
+			return;
 		this.checked = isChecked;
 		if (checked) {
 			mCheckedProgress = 1.0f;
-		}else{
+		} else {
 			mCheckedProgress = 0.0f;
 		}
 		requestLayout();
 		postInvalidate();
 	}
-	public void setChecking(boolean isChecked){
-		if(this.checked!=isChecked){
-			progressing=true;
-			if(isChecked){
+
+	public void setChecking(boolean isChecked) {
+		if (this.checked != isChecked) {
+			progressing = true;
+			if (isChecked) {
 				goChecked();
-			}else{
+			} else {
 				goUnchecked();
 			}
 		}
 	}
-	public boolean isChecked(){
+
+	public boolean isChecked() {
 		return this.checked;
 	}
 
 	private void setUnchecked() {
-		mPareser.load(icon, 0);
-		pathDataSet = computeDatas(pathDataSet, icon);
+		pathDataSet = new PathDataSet();
+		pathDataSet.computeDatas(icon);
 		pathDataSet.mPaint.setColor(this.iconColor.getColorForState(
 				getDrawableState(), Color.BLACK));
-		pathDataSet.mMatrix.setScale(pathDataSet.scale, pathDataSet.scale);
-		pathDataSet.mMatrix.postTranslate(pathDataSet.dx, pathDataSet.dy);
-		pathDataSet.mPath.transform(pathDataSet.mMatrix);
 	}
-	
-	private int getDefaultCheckedColor(){
+
+	private int getDefaultCheckedColor() {
 		return Color.GREEN;
 	}
 
 	private void setChecked() {
 		checkedPath = new PathDataSet();
-		checkedPath.mPaint.setColor(checkedColor.getColorForState(getDrawableState(), getDefaultCheckedColor()));
+		checkedPath.mPaint.setColor(checkedColor.getColorForState(
+				getDrawableState(), getDefaultCheckedColor()));
 		mPareser.load(iconChecked, 0);
-		checkedPath = computeDatas(checkedPath, iconChecked);
-		checkedPath.mMatrix.setScale(checkedPath.scale, checkedPath.scale);
-		checkedPath.mMatrix.postTranslate(checkedPath.dx, checkedPath.dy);
-		checkedPath.mPath.transform(checkedPath.mMatrix);
+		checkedPath.computeDatas(iconChecked);
 	}
-	
 
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -134,15 +137,15 @@ public class IconCheckBox extends SvgPathView implements android.view.View.OnCli
 		}
 
 	}
-	
+
 	@Override
-    protected void drawableStateChanged() {
-        super.drawableStateChanged();
-        if(checkedColor!=null&&checkedColor.isStateful())
-        {
-        	checkedPath.mPaint.setColor(this.checkedColor.getColorForState(getDrawableState(), getDefaultCheckedColor()));
-        	invalidate();
-        }
+	protected void drawableStateChanged() {
+		super.drawableStateChanged();
+		if (checkedColor != null && checkedColor.isStateful()) {
+			checkedPath.mPaint.setColor(this.checkedColor.getColorForState(
+					getDrawableState(), getDefaultCheckedColor()));
+			invalidate();
+		}
 	}
 
 	private void goChecked() {
@@ -172,7 +175,6 @@ public class IconCheckBox extends SvgPathView implements android.view.View.OnCli
 			}
 		}, 15);
 	}
-	
 
 	public interface CheckedChangedListener {
 		void checkedChanged(boolean isChecked);

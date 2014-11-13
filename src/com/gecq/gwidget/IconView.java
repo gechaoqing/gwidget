@@ -14,17 +14,21 @@ import android.util.AttributeSet;
  */
 public class IconView extends SvgPathView {
 
+	private PathDataSet pathDataSet;
 	public IconView(Context context) {
 		super(context);
+		pathDataSet= new PathDataSet();
 	}
 
 	public IconView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
+		pathDataSet= new PathDataSet();
 		draw();
 	}
 
 	public IconView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		pathDataSet= new PathDataSet();
 		draw();
 	}
 
@@ -50,12 +54,8 @@ public class IconView extends SvgPathView {
 	}
 	
 	private void draw(){
-		mPareser.load(icon, 0);
-		pathDataSet= computeDatas(pathDataSet, icon);
+		pathDataSet.computeDatas(icon);
 		pathDataSet.mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
-		pathDataSet.mMatrix.setScale(pathDataSet.scale, pathDataSet.scale);
-		pathDataSet.mMatrix.postTranslate(pathDataSet.dx, pathDataSet.dy);
-		pathDataSet.mPath.transform(pathDataSet.mMatrix);
 		requestLayout();
 		invalidate();
 	}

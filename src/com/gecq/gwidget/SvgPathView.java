@@ -33,7 +33,6 @@ public class SvgPathView extends View {
 	protected int scaleType = SCALE_CENTER;
 	protected float width, height;
 
-	protected PathDataSet pathDataSet;
 
 	protected static final int SCALE_CENTER = 0;
 	protected static final int SCALE_WITH_WIDTH = 1;
@@ -43,6 +42,7 @@ public class SvgPathView extends View {
 		protected Path mPath;
 		protected Paint mPaint;
 		protected Matrix mMatrix;
+		protected RectF mRectTransformed;
 		protected RectF mRectF;
 		protected float scale = 1.0f;
 		protected float dx = 0, dy = 0;
@@ -53,6 +53,45 @@ public class SvgPathView extends View {
 			mMatrix = new Matrix();
 			mPath = new Path();
 			mRectF = new RectF();
+		}
+		protected void computeDatas(String icon) {
+			computeDatas(icon,scaleType);
+		}
+
+		protected void computeDatas(String icon,int scaleType) {
+			mPath = doPath(mPath, icon);
+			mPath.computeBounds(mRectF, true);
+			float dwidth = mRectF.width();
+			float dheight = mRectF.height();
+			switch (scaleType) {
+			case SCALE_CENTER:
+				scale = Math.min(width / dwidth, height / dheight);
+				getDxDyBigger(dwidth, dheight);
+				break;
+			case SCALE_WITH_HEIGHT:
+				scale = height / dheight;
+				width = dwidth * scale;
+				getDxDyBigger(dwidth, dheight);
+
+				break;
+			case SCALE_WITH_WIDTH:
+				scale = width / dwidth;
+				height = dheight * scale;
+				getDxDyBigger(dwidth, dheight);
+				break;
+			}
+			transform();
+		}
+		private void getDxDyBigger(float dwidth, float dheight) {
+			dx = (int) ((width - dwidth * scale) * 0.5f + 0.5f);
+			dy = (int) ((height - dheight * scale) * 0.5f + 0.5f);
+		}
+		
+		private void transform(){
+			mMatrix.setScale(scale, scale);
+			mMatrix.postTranslate(dx, dy);
+			mPath.transform(mMatrix);
+			mPath.computeBounds(mRectTransformed, true); 
 		}
 	}
 
@@ -71,7 +110,6 @@ public class SvgPathView extends View {
 	}
 
 	private void getAttrs(Context context, AttributeSet attrs) {
-		pathDataSet = new PathDataSet();
 		TypedArray typedArray = context.obtainStyledAttributes(attrs,
 				R.styleable.iconView);
 		mDensity = context.getResources().getDisplayMetrics().density;
@@ -103,37 +141,6 @@ public class SvgPathView extends View {
 		return mPaint;
 	}
 
-	protected PathDataSet computeDatas(PathDataSet pds, String icon) {
-		pds.mPath = doPath(pds.mPath, icon);
-		pds.mPath.computeBounds(pds.mRectF, true);
-		float dwidth = pds.mRectF.width();
-		float dheight = pds.mRectF.height();
-		switch (scaleType) {
-		case SCALE_CENTER:
-			pds.scale = Math.min(width / dwidth, height / dheight);
-			getDxDyBigger(pds, dwidth, dheight);
-			break;
-		case SCALE_WITH_HEIGHT:
-			pds.scale = height / dheight;
-			width = dwidth * pds.scale;
-			getDxDyBigger(pds, dwidth, dheight);
-
-			break;
-		case SCALE_WITH_WIDTH:
-			pds.scale = width / dwidth;
-			height = dheight * pds.scale;
-			getDxDyBigger(pds, dwidth, dheight);
-
-			break;
-		}
-		return pds;
-	}
-
-	private void getDxDyBigger(PathDataSet pds, float dwidth, float dheight) {
-		pds.dx = (int) ((width - dwidth * pds.scale) * 0.5f + 0.5f);
-		pds.dy = (int) ((height - dheight * pds.scale) * 0.5f + 0.5f);
-	}
-
 	protected int C(String str) {
 		return Color.parseColor(str);
 	}
@@ -145,6 +152,7 @@ public class SvgPathView extends View {
 		if (s == null) {
 			return mPath;
 		}
+		mPareser.load(s, 0);
 		// System.out.println("==============================================");
 		int n = s.length();
 		mPareser.skipWhitespace();

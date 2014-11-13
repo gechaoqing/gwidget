@@ -1,11 +1,17 @@
 package com.gecq.gwidget;
 
 
+import com.gecq.gwidget.utils.SizeUtils;
+
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 /****
  * IconTextView
  * <br> Copyright (C) 2014 <b>Gechaoqing</b>
@@ -13,65 +19,161 @@ import android.widget.TextView;
  * @since 2014-10-20
  * 
  */
-public class IconTextView extends RelativeLayout {
+public class IconTextView extends SvgPathView {
 
-	private TextView mTextView;
-	private IconView mSvgPathView;
-	private int iconDir=DIR_TOP;//left 0 top 1 right 2 bottom 3
-	private float iconPadding=5.0f;
-	private LayoutParams mLayout,mLayout1;
+	private float iconPadding;
+	private PathDataSet iconLeft, iconRight, iconTop, iconBottom;
+	private String left, right, top, bottom;
+	private float iconPaddingLeft,iconPaddingTop,iconPaddingRight,iconPaddingBottom;
+	private String text;
+	private ColorStateList textColor;
+	private Rect textBounds;
+	private float textSize;
+	private Paint textPaint;
+	private float height, width;
+	private float offsetY, offsetX;
+	private float textHeight, textWidth;
+	private float iconLeftWidth,iconTopHeight;
 	
-	private static final int DIR_LEFT=0,DIR_TOP=1,DIR_RIGHTT=2,DIR_BOTTOM=3;
 
 	public IconTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		create(context,attrs);
+		create(context, attrs);
+	}
+
+	private void create(Context context, AttributeSet attrs) {
+		TypedArray ta = context.obtainStyledAttributes(attrs,
+				R.styleable.iconTextView);
+		left = ta.getString(R.styleable.iconTextView_iconLeft);
+		right = ta.getString(R.styleable.iconTextView_iconRight);
+		top = ta.getString(R.styleable.iconTextView_iconTop);
+		bottom = ta.getString(R.styleable.iconTextView_iconBottom);
+		text = ta.getString(R.styleable.iconTextView_text);
+		iconPadding = ta.getDimension(
+				R.styleable.iconTextView_iconPadding, SizeUtils.getInstance(context).getDip2Int(5));
+		textColor = ta.getColorStateList(R.styleable.iconTextView_textColor);
+		if(textColor==null){
+			textColor=ColorStateList.valueOf(Color.BLACK);
+		}
+		textSize =ta.getDimension(R.styleable.iconTextView_textSize, SizeUtils.getInstance(context).getSp2Int(14));
+		ta.recycle();
+		textPaint = new Paint();
+		textPaint.setTypeface(Typeface.DEFAULT);
+		textPaint.setAntiAlias(true);
+		textPaint.setTextSize(textSize);
+		textPaint.setColor(textColor.getColorForState(
+				getDrawableState(), Color.BLACK));
+		textBounds= new Rect();
+		textPaint.getTextBounds(text, 0, text.length(), textBounds);
+		textHeight = textBounds.height();
+		textWidth =  textBounds.width();
+		if (left != null) {
+			iconLeft = new PathDataSet();
+			initDataSet(iconLeft, left);
+			iconPaddingLeft=iconPadding;
+		}
+		if (right != null) {
+			iconRight = new PathDataSet();
+			initDataSet(iconRight, right);
+			iconPaddingRight=iconPadding;
+		}
+		if (top != null) {
+			iconTop = new PathDataSet();
+			initDataSet(iconTop, top);
+			iconPaddingTop=iconPadding;
+		}
+		if (bottom != null) {
+			iconBottom = new PathDataSet();
+			initDataSet(iconBottom, bottom);
+			iconPaddingBottom=iconPadding;
+		}
+		computeSize();
+	}
+
+	private void initDataSet(PathDataSet dataSet, String path) {
+		dataSet.mPaint.setColor(this.iconColor.getColorForState(
+				getDrawableState(), Color.BLACK));
+		dataSet.computeDatas(path, SCALE_CENTER);
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) {
+		if (left != null) {
+			canvas.save();
+			canvas.translate(getPaddingLeft(),iconTopHeight
+					+ (offsetY > 0 ? offsetY : 0)+ getPaddingTop()+iconPaddingTop);
+			canvas.drawPath(iconLeft.mPath, iconLeft.mPaint);
+			canvas.restore();
+		}
+		if (right != null) {
+			canvas.save();
+			canvas.translate(getPaddingLeft()+textWidth+iconPaddingLeft+iconPaddingRight+iconLeftWidth, iconTopHeight
+					+ (offsetY > 0 ? offsetY : 0)+ getPaddingTop()+iconPaddingTop);
+			canvas.drawPath(iconRight.mPath, iconRight.mPaint);
+			canvas.restore();
+		}
+		if(top!=null){
+			canvas.save();
+			canvas.translate(iconLeftWidth+getPaddingLeft()+ (offsetX > 0 ? offsetX : 0)+iconPaddingLeft, getPaddingTop());
+			canvas.drawPath(iconTop.mPath, iconTop.mPaint);
+			canvas.restore();
+		}
+		if(bottom!=null){
+			canvas.save();
+			canvas.translate(iconLeftWidth+getPaddingLeft()+ (offsetX > 0 ? offsetX : 0)+iconPaddingLeft, getPaddingTop()+iconPaddingTop+iconPaddingBottom+iconTopHeight+textHeight);
+			canvas.drawPath(iconBottom.mPath, iconBottom.mPaint);
+			canvas.restore();
+		}
+		canvas.drawText(text, iconLeftWidth+getPaddingLeft()+ (offsetX < 0 ? offsetX : 0)+iconPaddingLeft, iconTopHeight+ getPaddingTop()+(offsetY < 0 ? offsetY : 0)+iconPaddingTop+(textHeight-textPaint.descent() - textPaint.ascent()) / 2, textPaint);
+	}
+
+	private void computeSize() {
+		height = textHeight+ getPaddingTop()+ getPaddingBottom()+iconPaddingTop+iconPaddingBottom;
+		width = textWidth+getPaddingLeft()+getPaddingRight()+iconPaddingLeft+iconPaddingRight;
+		if (left != null) {
+			iconLeftWidth = iconLeft.mRectTransformed.width();
+			offsetY = (textHeight - iconLeft.mRectTransformed.height())/2;
+			width += iconLeftWidth;
+		}
+		if (right != null) {
+			width += iconRight.mRectTransformed.width() ;
+			offsetY = (textHeight - iconRight.mRectTransformed.height())/2;
+		}
+		if (top != null) {
+			iconTopHeight = iconTop.mRectTransformed.height() ;
+			offsetX = (textWidth - iconTop.mRectTransformed.width())/2;
+			height += iconTopHeight;
+		}
+		if (bottom != null) {
+			height += iconBottom.mRectTransformed.height() ;
+			offsetX = (textWidth - iconBottom.mRectTransformed.width())/2;
+		}
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		setMeasuredDimension((int) width, (int) height);
 	}
 	
-	private void create(Context context, AttributeSet attrs){
-		TypedArray ta=context.obtainStyledAttributes(attrs,R.styleable.iconView);
-		this.iconDir=ta.getInt(R.styleable.iconView_iconDir, DIR_LEFT);
-		this.iconPadding=ta.getDimension(R.styleable.iconView_iconPadding, 5.0f);
-		ta.recycle();
-		mTextView=new TextView(context,attrs);
-		mTextView.setPadding(0, 0, 0, 0);
-		mTextView.setBackgroundResource(android.R.color.transparent);
-		mSvgPathView=new IconView(context,attrs);
-		mSvgPathView.setBackgroundResource(android.R.color.transparent);
-		mSvgPathView.setId(R.id.icon_in_icontextview);
-		mSvgPathView.setPadding(0, 0, 0, 0);
-		mLayout=new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		mLayout1=new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		addView(mTextView);
-		addView(mSvgPathView);
-		switch (iconDir) {
-		case DIR_LEFT:
-			mLayout.addRule(RIGHT_OF,R.id.icon_in_icontextview);
-			mLayout.addRule(CENTER_VERTICAL);
-			mLayout1.addRule(CENTER_VERTICAL);
-			mLayout.setMargins((int)iconPadding, 0, 0, 0);
-			break;
-		case DIR_RIGHTT:
-			mLayout.addRule(LEFT_OF, R.id.icon_in_icontextview);
-			mLayout.addRule(CENTER_VERTICAL);
-			mLayout1.addRule(CENTER_VERTICAL);
-			mLayout.setMargins(0, 0, (int)iconPadding,0);
-			break;
-		case DIR_BOTTOM:
-			mLayout.addRule(ABOVE, R.id.icon_in_icontextview);
-			mLayout.addRule(CENTER_HORIZONTAL);
-			mLayout1.addRule(CENTER_HORIZONTAL);
-			mLayout.setMargins(0, 0, 0, (int)iconPadding);
-			break;
-		case DIR_TOP:
-			mLayout.addRule(BELOW, R.id.icon_in_icontextview);
-			mLayout.addRule(CENTER_HORIZONTAL);
-			mLayout1.addRule(CENTER_HORIZONTAL);
-			mLayout.setMargins(0, (int)iconPadding, 0, 0);
-			break;
-		}
-		mTextView.setLayoutParams(mLayout);
-		mSvgPathView.setLayoutParams(mLayout1);
+	@Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        if(iconColor!=null&&iconColor.isStateful())
+        {
+        	if(iconLeft!=null)
+        		iconLeft.mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
+        	if(iconRight!=null)
+        		iconRight.mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
+        	if(iconTop!=null)
+        		iconTop.mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
+        	if(iconBottom!=null)
+        		iconBottom.mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
+        	invalidate();
+        }
+        if(textColor!=null&&textColor.isStateful()){
+        	textPaint.setColor(this.textColor.getColorForState(getDrawableState(), Color.BLACK));
+        	invalidate();
+        }
 	}
 
 }

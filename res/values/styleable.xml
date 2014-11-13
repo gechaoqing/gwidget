@@ -65,17 +65,20 @@
             <enum name="withWidth" value="1" />
             <enum name="withHeight" value="2" />
         </attr>
-        <attr name="iconDir">
-            <enum name="left" value="0" />
-            <enum name="top" value="1" />
-            <enum name="right" value="2" />
-            <enum name="bottom" value="3" />
-        </attr>
-        <attr name="iconPadding" format="dimension"/>
     </declare-styleable>
     <declare-styleable name="iconCheckBox">
         <attr name="iconCheckedColor" format="reference|color"/>
         <attr name="iconChecked" format="reference|string"/>
+    </declare-styleable>
+    <declare-styleable name="iconTextView">
+        <attr name="iconLeft" format="reference|string" />
+        <attr name="iconRight" format="reference|string" />
+        <attr name="iconTop" format="reference|string" />
+        <attr name="iconBottom" format="reference|string" />
+        <attr name="iconPadding" format="dimension" />
+        <attr name="text" format="reference|string"/>
+        <attr name="textColor" format="reference|color"/>
+        <attr name="textSize" format="dimension"/>
     </declare-styleable>
 
 </resources>
