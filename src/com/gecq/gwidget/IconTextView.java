@@ -40,6 +40,18 @@ public class IconTextView extends SvgPathView {
 		super(context, attrs);
 		create(context, attrs);
 	}
+	
+	public void setText(String text){
+		this.text=text;
+		getTextBounds();
+		computeSize();
+		invalidate();
+		requestLayout();
+	}
+	
+	public void setText(int resid){
+		setText(getResources().getString(resid));
+	}
 
 	private void create(Context context, AttributeSet attrs) {
 		TypedArray ta = context.obtainStyledAttributes(attrs,
@@ -64,30 +76,15 @@ public class IconTextView extends SvgPathView {
 		textPaint.setColor(textColor.getColorForState(
 				getDrawableState(), Color.BLACK));
 		textBounds= new Rect();
+		getTextBounds();
+		initIcons();
+		computeSize();
+	}
+	
+	private void getTextBounds(){
 		textPaint.getTextBounds(text, 0, text.length(), textBounds);
 		textHeight = textBounds.height();
-		textWidth =  textBounds.width();
-		if (left != null) {
-			iconLeft = new PathDataSet();
-			initDataSet(iconLeft, left);
-			iconPaddingLeft=iconPadding;
-		}
-		if (right != null) {
-			iconRight = new PathDataSet();
-			initDataSet(iconRight, right);
-			iconPaddingRight=iconPadding;
-		}
-		if (top != null) {
-			iconTop = new PathDataSet();
-			initDataSet(iconTop, top);
-			iconPaddingTop=iconPadding;
-		}
-		if (bottom != null) {
-			iconBottom = new PathDataSet();
-			initDataSet(iconBottom, bottom);
-			iconPaddingBottom=iconPadding;
-		}
-		computeSize();
+		textWidth = textPaint.measureText(text);
 	}
 
 	private void initDataSet(PathDataSet dataSet, String path) {
@@ -126,6 +123,29 @@ public class IconTextView extends SvgPathView {
 		}
 		canvas.drawText(text, iconLeftWidth+getPaddingLeft()+ (offsetX < 0 ? offsetX : 0)+iconPaddingLeft, iconTopHeight+ getPaddingTop()+(offsetY < 0 ? offsetY : 0)+iconPaddingTop+(textHeight-textPaint.descent() - textPaint.ascent()) / 2, textPaint);
 	}
+	
+	private void initIcons(){
+		if (left != null) {
+			iconLeft = new PathDataSet();
+			initDataSet(iconLeft, left);
+			iconPaddingLeft=iconPadding;
+		}
+		if (right != null) {
+			iconRight = new PathDataSet();
+			initDataSet(iconRight, right);
+			iconPaddingRight=iconPadding;
+		}
+		if (top != null) {
+			iconTop = new PathDataSet();
+			initDataSet(iconTop, top);
+			iconPaddingTop=iconPadding;
+		}
+		if (bottom != null) {
+			iconBottom = new PathDataSet();
+			initDataSet(iconBottom, bottom);
+			iconPaddingBottom=iconPadding;
+		}
+	}
 
 	private void computeSize() {
 		height = textHeight+ getPaddingTop()+ getPaddingBottom()+iconPaddingTop+iconPaddingBottom;
@@ -152,7 +172,7 @@ public class IconTextView extends SvgPathView {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		setMeasuredDimension((int) width, (int) height);
+		setMeasuredDimension((int)width, (int) height);
 	}
 	
 	@Override
