@@ -91,7 +91,7 @@ public class SvgPathView extends View {
 			mMatrix.setScale(scale, scale);
 			mMatrix.postTranslate(dx, dy);
 			mPath.transform(mMatrix);
-			mPath.computeBounds(mRectTransformed, true); 
+			mRectTransformed.set(0, 0, width, height);
 		}
 	}
 
