@@ -42,10 +42,11 @@ public class SvgPathView extends View {
 		protected Path mPath;
 		protected Paint mPaint;
 		protected Matrix mMatrix;
-		protected RectF mRectTransformed;
+//		protected RectF mRectTransformed;
 		protected RectF mRectF;
 		protected float scale = 1.0f;
 		protected float dx = 0, dy = 0;
+		protected float mWidth = 0, mHeight = 0;
 
 		protected PathDataSet() {
 			mPaint = new Paint();
@@ -60,38 +61,45 @@ public class SvgPathView extends View {
 
 		protected void computeDatas(String icon,int scaleType) {
 			mPath = doPath(mPath, icon);
+			if(!mRectF.isEmpty()){
+				mRectF.setEmpty();
+			}
 			mPath.computeBounds(mRectF, true);
 			float dwidth = mRectF.width();
 			float dheight = mRectF.height();
 			switch (scaleType) {
 			case SCALE_CENTER:
 				scale = Math.min(width / dwidth, height / dheight);
-				getDxDyBigger(dwidth, dheight);
+//				getDxDyBigger(dwidth, dheight);
 				break;
 			case SCALE_WITH_HEIGHT:
 				scale = height / dheight;
 				width = dwidth * scale;
-				getDxDyBigger(dwidth, dheight);
+//				getDxDyBigger(dwidth, dheight);
 
 				break;
 			case SCALE_WITH_WIDTH:
 				scale = width / dwidth;
 				height = dheight * scale;
-				getDxDyBigger(dwidth, dheight);
+//				getDxDyBigger(dwidth, dheight);
 				break;
 			}
 			transform();
 		}
-		private void getDxDyBigger(float dwidth, float dheight) {
-			dx = (int) ((width - dwidth * scale) * 0.5f + 0.5f);
-			dy = (int) ((height - dheight * scale) * 0.5f + 0.5f);
-		}
+//		private void getDxDyBigger(float dwidth, float dheight) {
+//			dx = (int) ((width - dwidth * scale) * 0.5f + 0.5f);
+//			dy = (int) ((height - dheight * scale) * 0.5f + 0.5f);
+//		}
 		
 		private void transform(){
-			mMatrix.setScale(scale, scale);
-			mMatrix.postTranslate(dx, dy);
+			mMatrix.reset();
+			mMatrix.setTranslate(-mRectF.left, -mRectF.top);
+			mMatrix.postScale(scale, scale);
+//			mMatrix.postTranslate(dx, dy);
 			mPath.transform(mMatrix);
-			mRectTransformed.set(0, 0, width, height);
+			mWidth=width;
+			mHeight=height;
+//			mRectTransformed.set(0, 0, width, height);
 		}
 	}
 
