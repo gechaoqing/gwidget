@@ -66,6 +66,7 @@ IconView:使用说明
 4.IconTextView
 ==========
 IconTextView:使用说明
+---------
 	继承SvgPathView->View，实现通过SVG Path字符串绘制图形/图标和相应位置的文字
 ### 4.1.Layout文件中定义样式
 	gwidget:iconLeft    ------文字左侧图标
