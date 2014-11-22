@@ -78,4 +78,6 @@ IconTextView:使用说明
 	gwidget:iconSize    ------图标大小
 	gwidget:text        ------文字内容
 	gwidget:textSize    ------文字大小
-	gwidget:textColor   ------文字颜色  
+	gwidget:textColor   ------文字颜色 
+### 4.2.图例
+ ![github](https://github.com/gechaoqing/gwidget/blob/master/iconTextView.jpg) 
