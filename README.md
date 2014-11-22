@@ -63,3 +63,18 @@ IconView:使用说明
 	gwidget:iconSize  ------图形/图标大小
 ### 3.2.图例
 ![github](https://github.com/gechaoqing/gwidget/blob/master/icon.jpg) 
+4.IconTextView
+==========
+IconTextView:使用说明
+	继承SvgPathView->View，实现通过SVG Path字符串绘制图形/图标和相应位置的文字
+### 4.1.Layout文件中定义样式
+	gwidget:iconLeft    ------文字左侧图标
+	gwidget:iconRight   ------文字右侧图标
+	gwidget:iconTop     ------文字上侧图标
+	gwidget:iconBottom  ------文字下侧图标
+	gwidget:iconPadding ------文字与图标的距离
+	gwidget:iconColor   ------图标颜色
+	gwidget:iconSize    ------图标大小
+	gwidget:text        ------文字内容
+	gwidget:textSize    ------文字大小
+	gwidget:textColor   ------文字颜色  
