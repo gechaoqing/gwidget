@@ -98,6 +98,8 @@ public class IconTextView extends SvgPathView {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+		canvas.save();
+		canvas.translate(dx, dy);
 		if (left != null) {
 			canvas.save();
 			canvas.translate(getPaddingLeft(), iconTopHeight
@@ -138,6 +140,7 @@ public class IconTextView extends SvgPathView {
 				+ iconPaddingTop
 				+ (textHeight - textPaint.descent() - textPaint.ascent()) / 2,
 				textPaint);
+		canvas.restore();
 	}
 
 	private void initIcons() {
@@ -196,9 +199,28 @@ public class IconTextView extends SvgPathView {
 		}
 
 	}
+	
+	private float dx,dy;
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+		int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+		if (widthMode == MeasureSpec.EXACTLY) {
+			if (width < widthSize) {
+				dx = (widthSize - width) / 2;
+			}
+			width = widthSize;
+		}
+		if (heightMode == MeasureSpec.EXACTLY) {
+			if (height < heightSize) {
+				dy = (heightSize - height) / 2;
+			}
+			height = heightSize;
+		}
 		setMeasuredDimension((int) width, (int) height);
 	}
 

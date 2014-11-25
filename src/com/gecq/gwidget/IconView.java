@@ -53,6 +53,11 @@ public class IconView extends SvgPathView {
 		invalidate();
 	}
 	
+	public void setScaleType(int scaleType){
+		this.scaleType=scaleType;
+		draw();
+	}
+	
 	private void draw(){
 		pathDataSet.computeDatas(icon);
 		pathDataSet.mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
