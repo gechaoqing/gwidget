@@ -42,6 +42,9 @@
             <enum name="centerCrop" value="0"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="blurImageView">
+        <attr name="blurRadius" format="float|dimension"/>
+    </declare-styleable>
     <declare-styleable name="iconView">
         <attr name="icon" format="reference|string" />
         <attr name="iconSize" format="dimension" />
