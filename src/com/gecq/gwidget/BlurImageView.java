@@ -94,7 +94,7 @@ public class BlurImageView extends ImageView {
 		imageChanged();
 	}
 
-	public void setRadius(float radius) {
+	public void setBlurRadius(float radius) {
 		this.hRadius = radius;
 		this.vRadius = radius;
 		imageChanged();
