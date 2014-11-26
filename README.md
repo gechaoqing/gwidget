@@ -94,3 +94,12 @@ IconCheckBox:使用说明
     gwidget:iconSize         ------checkBox大小
 ### 5.2.图例
  ![github](https://github.com/gechaoqing/gwidget/blob/master/iconcheckbox.gif) 
+6.BlurImageView
+==========
+BlurImageView:使用说明
+-----------
+	继承ImageView,实现了对图片的高斯模糊效果
+### 6.1.Layout文件中定义样式
+	gwidget:blurRadius    ------图片模糊半径(越大越模糊)
+### 6.2.图例
+ ![github](https://github.com/gechaoqing/gwidget/blob/master/blurImg.jpg) 

@@ -16,7 +16,7 @@ import android.widget.ImageView;
 
 public class BlurImageView extends ImageView {
 
-	private boolean DEBUG = true;
+	private boolean DEBUG = false;
 	private Paint mPaint;
 	private Bitmap bit;
 	private float radius = 40;
