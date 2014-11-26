@@ -8,7 +8,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.Paint.FontMetrics;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
@@ -20,7 +20,7 @@ import android.util.AttributeSet;
  * @since 2014-10-20
  * 
  */
-public class IconTextView extends SvgPathView {
+public class IconTextView extends IconView {
 
 	private float iconPadding;
 	private PathDataSet iconLeft, iconRight, iconTop, iconBottom;
@@ -29,7 +29,7 @@ public class IconTextView extends SvgPathView {
 			iconPaddingBottom;
 	private String text;
 	private ColorStateList textColor;
-	private Rect textBounds;
+	private FontMetrics mFontMetrics;
 	private float textSize;
 	private Paint textPaint;
 	private float height, width;
@@ -37,6 +37,7 @@ public class IconTextView extends SvgPathView {
 	private float textHeight, textWidth;
 	private float iconLeftWidth, iconTopHeight;
 	private float maxWidth, maxHeight;
+	private ColorStateList iconColor;
 
 	public IconTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -78,22 +79,21 @@ public class IconTextView extends SvgPathView {
 		textPaint.setTextSize(textSize);
 		textPaint.setColor(textColor.getColorForState(getDrawableState(),
 				Color.BLACK));
-		textBounds = new Rect();
+		this.iconColor = getIconColor();
 		getTextBounds();
 		initIcons();
-		computeSize();
 	}
 
 	private void getTextBounds() {
-		textPaint.getTextBounds(text, 0, text.length(), textBounds);
-		textHeight = textBounds.height();
+		mFontMetrics = textPaint.getFontMetrics();
+		textHeight = mFontMetrics.descent - mFontMetrics.ascent;
 		textWidth = textPaint.measureText(text);
 	}
 
 	private void initDataSet(PathDataSet dataSet, String path, int scale) {
-		dataSet.mPaint.setColor(this.iconColor.getColorForState(
-				getDrawableState(), Color.BLACK));
-		dataSet.computeDatas(path, scale);
+		dataSet.icon = path;
+		dataSet.setIconColor(this.iconColor, Color.BLACK, getDrawableState());
+		dataSet.computeDatas(SCALE_CENTER);
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class IconTextView extends SvgPathView {
 		}
 		if (right != null) {
 			canvas.save();
-			canvas.translate(getPaddingLeft() + textWidth + iconPaddingLeft
+			canvas.translate(getPaddingLeft() + mxw() + iconPaddingLeft
 					+ iconPaddingRight + iconLeftWidth, iconTopHeight
 					+ (offsetY > 0 ? offsetY : 0) + getPaddingTop()
 					+ iconPaddingTop);
@@ -130,17 +130,15 @@ public class IconTextView extends SvgPathView {
 			canvas.translate(iconLeftWidth + getPaddingLeft()
 					+ (offsetX > 0 ? offsetX : 0) + iconPaddingLeft,
 					getPaddingTop() + iconPaddingTop + iconPaddingBottom
-							+ iconTopHeight + textHeight);
+							+ iconTopHeight + mxh());
 			canvas.drawPath(iconBottom.mPath, iconBottom.mPaint);
 			canvas.restore();
 		}
 		canvas.drawText(text, iconLeftWidth + getPaddingLeft()
 				+ (offsetX < 0 ? -offsetX : 0) + iconPaddingLeft, iconTopHeight
 				+ getPaddingTop() + (offsetY < 0 ? -offsetY : 0)
-				+ iconPaddingTop
-				+ (textHeight - textPaint.descent() - textPaint.ascent()) / 2,
+				+ iconPaddingTop + (textHeight) / 2 + mFontMetrics.descent,
 				textPaint);
-		canvas.restore();
 	}
 
 	private void initIcons() {
@@ -170,14 +168,21 @@ public class IconTextView extends SvgPathView {
 			float bw = iconBottom.mWidth;
 			maxWidth = bw > maxWidth ? bw : maxWidth;
 		}
+		computeSize();
+	}
+
+	private float mxh() {
+		return (textHeight < maxHeight ? maxHeight : textHeight);
+	}
+
+	private float mxw() {
+		return (textWidth < maxWidth ? maxWidth : textWidth);
 	}
 
 	private void computeSize() {
-		height = (textHeight < maxHeight ? maxHeight : textHeight)
-				+ getPaddingTop() + getPaddingBottom() + iconPaddingTop
+		height = mxh() + getPaddingTop() + getPaddingBottom() + iconPaddingTop
 				+ iconPaddingBottom;
-		width = (textWidth < maxWidth ? maxWidth : textWidth)
-				+ getPaddingLeft() + getPaddingRight() + iconPaddingLeft
+		width = mxw() + getPaddingLeft() + getPaddingRight() + iconPaddingLeft
 				+ iconPaddingRight;
 		if (maxHeight > 0)
 			offsetY = (textHeight - maxHeight) / 2;
@@ -198,9 +203,15 @@ public class IconTextView extends SvgPathView {
 			height += iconBottom.mHeight;
 		}
 
+		// height = mxh()
+		// + getPaddingTop() + getPaddingBottom() + iconPaddingTop
+		// + iconPaddingBottom;
+		// width = mxw()
+		// + getPaddingLeft() + getPaddingRight() + iconPaddingLeft
+		// + iconPaddingRight;
 	}
-	
-	private float dx,dy;
+
+	private float dx, dy;
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -221,7 +232,7 @@ public class IconTextView extends SvgPathView {
 			}
 			height = heightSize;
 		}
-		setMeasuredDimension((int) width, (int) height);
+		setMeasuredDimension((int) (width + 0.5f), (int) (height + 0.5f));
 	}
 
 	@Override

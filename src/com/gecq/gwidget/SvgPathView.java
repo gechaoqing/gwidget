@@ -25,9 +25,7 @@ public class SvgPathView extends View {
 
 	protected SvgParserHelper mPareser;
 
-	protected String icon;
 	protected float iconSize;
-	protected ColorStateList iconColor;
 	protected float mDensity;
 	protected final float size = 120;
 	protected int scaleType = SCALE_CENTER;
@@ -42,11 +40,11 @@ public class SvgPathView extends View {
 		protected Path mPath;
 		protected Paint mPaint;
 		protected Matrix mMatrix;
-//		protected RectF mRectTransformed;
 		protected RectF mRectF;
 		protected float scale = 1.0f;
-		protected float dx = 0, dy = 0;
 		protected float mWidth = 0, mHeight = 0;
+		protected String icon;
+		private ColorStateList iconColor;
 
 		protected PathDataSet() {
 			mPaint = new Paint();
@@ -55,11 +53,23 @@ public class SvgPathView extends View {
 			mPath = new Path();
 			mRectF = new RectF();
 		}
-		protected void computeDatas(String icon) {
-			computeDatas(icon,scaleType);
+		protected void computeDatas() {
+			computeDatas(scaleType);
+		}
+		
+		public void setIconColor(ColorStateList iconColor,int defaultColor,int[] state){
+			this.iconColor=iconColor;
+			mPaint.setColor(this.iconColor.getColorForState(state,defaultColor));
+		}
+		
+		public ColorStateList getIconColor(){
+			return this.iconColor;
 		}
 
-		protected void computeDatas(String icon,int scaleType) {
+		protected void computeDatas(int scaleType) {
+			if(icon==null){
+				return;
+			}
 			mPath = doPath(mPath, icon);
 			if(!mRectF.isEmpty()){
 				mRectF.setEmpty();
@@ -70,36 +80,27 @@ public class SvgPathView extends View {
 			switch (scaleType) {
 			case SCALE_CENTER:
 				scale = Math.min(width / dwidth, height / dheight);
-//				getDxDyBigger(dwidth, dheight);
 				break;
 			case SCALE_WITH_HEIGHT:
 				scale = height / dheight;
 				width = dwidth * scale;
-//				getDxDyBigger(dwidth, dheight);
 
 				break;
 			case SCALE_WITH_WIDTH:
 				scale = width / dwidth;
 				height = dheight * scale;
-//				getDxDyBigger(dwidth, dheight);
 				break;
 			}
 			transform();
 		}
-//		private void getDxDyBigger(float dwidth, float dheight) {
-//			dx = (int) ((width - dwidth * scale) * 0.5f + 0.5f);
-//			dy = (int) ((height - dheight * scale) * 0.5f + 0.5f);
-//		}
 		
 		private void transform(){
 			mMatrix.reset();
 			mMatrix.setTranslate(-mRectF.left, -mRectF.top);
 			mMatrix.postScale(scale, scale);
-//			mMatrix.postTranslate(dx, dy);
 			mPath.transform(mMatrix);
 			mWidth=width;
 			mHeight=height;
-//			mRectTransformed.set(0, 0, width, height);
 		}
 	}
 
@@ -119,18 +120,12 @@ public class SvgPathView extends View {
 
 	private void getAttrs(Context context, AttributeSet attrs) {
 		TypedArray typedArray = context.obtainStyledAttributes(attrs,
-				R.styleable.iconView);
+				R.styleable.svgView);
 		mDensity = context.getResources().getDisplayMetrics().density;
-		icon = typedArray.getString(R.styleable.iconView_icon);
-		this.iconSize = typedArray.getDimension(R.styleable.iconView_iconSize,
+		this.iconSize = typedArray.getDimension(R.styleable.svgView_iconSize,
 				12.0f * mDensity);
 		this.iconSize *= 0.01f;
-		this.iconColor = typedArray
-				.getColorStateList(R.styleable.iconView_iconColor);
-		if (this.iconColor == null) {
-			this.iconColor = ColorStateList.valueOf(Color.BLACK);
-		}
-		this.scaleType = typedArray.getInt(R.styleable.iconView_iconScaleType,
+		this.scaleType = typedArray.getInt(R.styleable.svgView_iconScaleType,
 				SCALE_WITH_HEIGHT);
 		typedArray.recycle();
 		init();

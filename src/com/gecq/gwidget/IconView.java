@@ -2,6 +2,7 @@ package com.gecq.gwidget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -23,22 +24,38 @@ public class IconView extends SvgPathView {
 	public IconView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		pathDataSet= new PathDataSet();
+		getAttrs(context, attrs);
 		draw();
 	}
 
 	public IconView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		pathDataSet= new PathDataSet();
+		getAttrs(context, attrs);
 		draw();
+	}
+	
+	private void getAttrs(Context context, AttributeSet attrs){
+		TypedArray typedArray = context.obtainStyledAttributes(attrs,
+				R.styleable.iconView);
+		String icon = typedArray.getString(R.styleable.iconView_icon);
+		ColorStateList iconColor = typedArray
+				.getColorStateList(R.styleable.iconView_iconColor);
+		if (iconColor == null) {
+			iconColor = ColorStateList.valueOf(Color.BLACK);
+		}
+		typedArray.recycle();
+		pathDataSet.icon=icon;
+		pathDataSet.setIconColor(iconColor, Color.BLACK, getDrawableState());
 	}
 
 	public void setIconPath(String path) {
-		icon=path;
+		pathDataSet.icon=path;
 		draw();
 	}
 
 	public void setIconPath(int resid) {
-		icon=getResources().getString(resid);
+		pathDataSet.icon=getResources().getString(resid);
 		draw();
 	}
 	
@@ -47,9 +64,11 @@ public class IconView extends SvgPathView {
 		pathDataSet.mPaint.setColor(colors.getColorForState(getDrawableState(), Color.BLACK));
 		invalidate();
 	}
-	
+	public ColorStateList getIconColor(){
+		return pathDataSet.getIconColor();
+	}
 	public void setIconColor(String color){
-		pathDataSet.mPaint.setColor(Color.parseColor(color));
+		pathDataSet.mPaint.setColor(C(color));
 		invalidate();
 	}
 	
@@ -59,8 +78,7 @@ public class IconView extends SvgPathView {
 	}
 	
 	private void draw(){
-		pathDataSet.computeDatas(icon);
-		pathDataSet.mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
+		pathDataSet.computeDatas();
 		requestLayout();
 		invalidate();
 	}
@@ -68,9 +86,10 @@ public class IconView extends SvgPathView {
 	@Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        if(iconColor!=null&&iconColor.isStateful())
+        ColorStateList color=pathDataSet.getIconColor();
+        if(color!=null&&color.isStateful())
         {
-        	pathDataSet.mPaint.setColor(this.iconColor.getColorForState(getDrawableState(), Color.BLACK));
+        	pathDataSet.mPaint.setColor(color.getColorForState(getDrawableState(), Color.BLACK));
         	invalidate();
         }
 	}
