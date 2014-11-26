@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gwidget="http://schemas.android.com/apk/res/com.gecq.gwidget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingTop="20dp" >
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:contentDescription="@null"
+        android:src="@drawable/test_img" />
+
+    <com.gecq.gwidget.BlurImageView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:src="@drawable/test_img"
+        gwidget:blurRadius="30sp" />
+
+    <com.gecq.gwidget.BlurImageView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:src="@drawable/test_img"
+        gwidget:blurRadius="50sp" />
+
+    <com.gecq.gwidget.BlurImageView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:src="@drawable/test_img"
+        gwidget:blurRadius="70sp" />
+
+    <com.gecq.gwidget.BlurImageView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:src="@drawable/test_img"
+        gwidget:blurRadius="80sp" />
+
+</LinearLayout>

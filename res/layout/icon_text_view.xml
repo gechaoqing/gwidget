@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gwidget="http://schemas.android.com/apk/res/com.gecq.gwidget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <com.gecq.gwidget.IconTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        gwidget:iconBottom="@string/icon_feedback"
+        gwidget:iconLeft="@string/icon_clock"
+        gwidget:iconRight="@string/icon_sys_setting"
+        gwidget:iconSize="30sp"
+        gwidget:iconTop="@string/icon_sign_down"
+        gwidget:text="iconTextView"
+        gwidget:textColor="#990000"
+        gwidget:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
+<com.gecq.gwidget.IconTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            gwidget:iconSize="30sp"
+            gwidget:iconTop="@string/icon_sys_setting"
+            gwidget:iconLeft="@string/icon_sys_setting"
+            gwidget:iconPadding="10dp"
+            gwidget:text="settingys"
+            gwidget:textColor="#990000"
+            gwidget:textSize="20sp" />
+<com.gecq.gwidget.IconTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            gwidget:iconSize="10sp"
+            gwidget:iconTop="@string/icon_sys_setting"
+            gwidget:iconLeft="@string/icon_sys_setting"
+            gwidget:iconPadding="10dp"
+            gwidget:text="settingys"
+            gwidget:textColor="#990000"
+            gwidget:textSize="20sp" />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
+
+        <com.gecq.gwidget.IconTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            gwidget:iconSize="30sp"
+            gwidget:iconTop="@string/icon_search"
+            gwidget:text="search"
+            gwidget:textColor="#990000"
+            gwidget:textSize="20sp" />
+
+        <com.gecq.gwidget.IconTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            gwidget:iconSize="30sp"
+            gwidget:iconTop="@string/icon_sys_setting"
+            gwidget:iconLeft="@string/icon_sys_setting"
+            gwidget:iconPadding="10dp"
+            gwidget:text="settingys"
+            gwidget:textColor="#990000"
+            gwidget:textSize="20sp" />
+
+        <com.gecq.gwidget.IconTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            gwidget:iconSize="30sp"
+            gwidget:iconTop="@string/icon_exit"
+            gwidget:text="exit"
+            gwidget:textColor="#990000"
+            gwidget:textSize="20sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="exitgy"
+            android:textColor="#990000"
+            android:layout_gravity="bottom"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</LinearLayout>

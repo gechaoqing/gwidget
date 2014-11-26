@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gwidget="http://schemas.android.com/apk/res/com.gecq.gwidget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#004d40"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/desktop_lrc"
+            android:textColor="#ffffff" />
+
+        <com.gecq.gwidget.SwitchButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#66ffffff" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/lockscreen"
+            android:textColor="#ffffff" />
+
+        <com.gecq.gwidget.SwitchButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            gwidget:offColor="#eeeeee"
+            gwidget:onColor="#00bcd4"
+            gwidget:thumbOffColor="#f8bbd0"
+            gwidget:thumbOnColor="#ff9800" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#66ffffff" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="@string/equalizer"
+            android:textColor="#ffffff" />
+
+        <com.gecq.gwidget.SwitchButton
+            android:id="@+id/equalizer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            gwidget:offColor="#999999"
+            gwidget:onColor="#990000"
+            gwidget:thumbOffColor="#f8bbd0"
+            gwidget:thumbOnColor="#e91e63"
+            gwidget:thumbStyle="match" />
+    </LinearLayout>
+    
+</LinearLayout>

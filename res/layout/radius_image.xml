@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gwidget="http://schemas.android.com/apk/res/com.gecq.gwidget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <com.gecq.gwidget.RadiusImage
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/test_img"
+            gwidget:borderColor="#99888888"
+            gwidget:borderStyle="outside"
+            gwidget:borderWidth="10"
+            gwidget:radius="50dp" />
+
+        <com.gecq.gwidget.RadiusImage
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:src="@drawable/test_img"
+            gwidget:borderColor="#99888888"
+            gwidget:borderStyle="over"
+            gwidget:borderWidth="10"
+            gwidget:radius="50dp" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:gravity="center_horizontal">
+
+        <com.gecq.gwidget.RadiusImage
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/test_img"
+            gwidget:borderColor="#99888888"
+            gwidget:borderStyle="outside"
+            gwidget:borderWidth="10"
+            gwidget:radius="20dp" />
+
+        <com.gecq.gwidget.RadiusImage
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/test_img"
+            gwidget:borderColor="#99ff0000"
+            gwidget:borderStyle="over"
+            gwidget:borderWidth="10"
+            gwidget:radius="10dp" 
+            gwidget:radiusTopLeft="5dp"
+            gwidget:radiusTopRight="5dp"
+            />
+        <com.gecq.gwidget.RadiusImage
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/test_img"
+            gwidget:borderColor="#99888888"
+            gwidget:borderStyle="over"
+            gwidget:borderWidth="10"
+            gwidget:radius="50dp" />
+    </LinearLayout>
+
+</LinearLayout>
