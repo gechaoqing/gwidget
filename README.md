@@ -81,3 +81,16 @@ IconTextView:使用说明
 	gwidget:textColor   ------文字颜色 
 ### 4.2.图例
  ![github](https://github.com/gechaoqing/gwidget/blob/master/iconTextView.jpg) 
+5.IconCheckBox
+===========
+IconCheckBox:使用说明
+--------
+	继承SvgPathView->View，实现通过SVG Path字符串绘制图形/图标
+### 5.1.Layout文件中定义样式
+    gwidget:iconChecked      ------选中时候的图形
+    gwidget:iconCheckedColor ------选中时候图形的颜色
+    gwidget:icon             ------未选中时候的图形
+    gwidget:iconColor        ------未选中时候图形的颜色
+    gwidget:iconSize         ------checkBox大小
+### 5.2.图例
+ ![github](https://github.com/gechaoqing/gwidget/blob/master/iconcheckbox.gif) 
