@@ -30,6 +30,10 @@
          <include
             android:id="@+id/layout06"
             layout="@layout/switch_button" />
+         
+         <include
+            android:id="@+id/layout07"
+            layout="@layout/icons_lib" />
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
     </ViewFlipper>
 </LinearLayout>

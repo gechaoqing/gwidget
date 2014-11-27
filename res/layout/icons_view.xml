@@ -9,31 +9,31 @@
     <com.gecq.gwidget.IconView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        gwidget:icon="@string/geicons_sign_down"
+        gwidget:icon="@string/gi_angle_o_down"
         gwidget:iconSize="50sp" />
 
     <com.gecq.gwidget.IconView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        gwidget:icon="@string/geicons_exit" 
+        gwidget:icon="@string/gi_exit" 
         gwidget:iconSize="50sp"
         />
 
     <com.gecq.gwidget.IconView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        gwidget:icon="@string/geicons_radio_checked"
+        gwidget:icon="@string/gi_radio_checked"
         gwidget:iconSize="50sp" />
     
     <com.gecq.gwidget.IconView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        gwidget:icon="@string/geicons_search"
+        gwidget:icon="@string/gi_search"
         gwidget:iconSize="50sp" />
     <com.gecq.gwidget.IconView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        gwidget:icon="@string/geicons_feedback"
+        gwidget:icon="@string/gi_msg"
         gwidget:iconSize="50sp" />
 
 </LinearLayout>

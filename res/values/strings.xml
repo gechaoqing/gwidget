@@ -6,4 +6,5 @@
     <string name="equalizer">均衡器</string>
     
     <item type="id" name="icon_in_icontextview"/>
+    <dimen name="iconlib_textsize">12sp</dimen>
 </resources>

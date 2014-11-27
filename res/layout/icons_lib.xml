@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gwidget="http://schemas.android.com/apk/res/com.gecq.gwidget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_angle_o_down"
+                gwidget:text="gi_angle_o_down"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_apps"
+                gwidget:text="gi_apps"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_circle_o"
+                gwidget:text="gi_circle_o"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_circle_check"
+                gwidget:text="gi_circle_check"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_clock"
+                gwidget:text="gi_clock"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_confg"
+                gwidget:text="gi_confg"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_exit"
+                gwidget:text="gi_exit"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_flag"
+                gwidget:text="gi_flag"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_glass"
+                gwidget:text="gi_glass"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_headphone"
+                gwidget:text="gi_headphone"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_heart"
+                gwidget:text="gi_heart"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_msg"
+                gwidget:text="gi_msg"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_speaker"
+                gwidget:text="gi_speaker"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_play_next"
+                gwidget:text="gi_play_next"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_radio_checked"
+                gwidget:text="gi_radio_checked"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_search"
+                gwidget:text="gi_search"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_alert_o"
+                gwidget:text="gi_alert_o"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_arrow_down"
+                gwidget:text="gi_arrow_down"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_angle_left"
+                gwidget:text="gi_angle_left"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_angle_right"
+                gwidget:text="gi_angle_right"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_arrow_up"
+                gwidget:text="gi_arrow_up"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_close"
+                gwidget:text="gi_close"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_close_circle"
+                gwidget:text="gi_close_circle"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_comment"
+                gwidget:text="gi_comment"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_clock_simple"
+                gwidget:text="gi_clock_simple"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_exp_smile"
+                gwidget:text="gi_exp_smile"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_file"
+                gwidget:text="gi_file"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_fire"
+                gwidget:text="gi_fire"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_heart_o"
+                gwidget:text="gi_heart_o"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_history"
+                gwidget:text="gi_history"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_history_arrow"
+                gwidget:text="gi_history_arrow"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_hook"
+                gwidget:text="gi_hook"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_location"
+                gwidget:text="gi_location"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_more"
+                gwidget:text="gi_more"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_tel_phone"
+                gwidget:text="gi_tel_phone"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_tel_phone_o"
+                gwidget:text="gi_tel_phone_o"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_play"
+                gwidget:text="gi_play"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_refresh_left"
+                gwidget:text="gi_refresh_left"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_refresh_arrow"
+                gwidget:text="gi_refresh_arrow"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_refresh_arrow_in"
+                gwidget:text="gi_refresh_arrow_in"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_sd_extra"
+                gwidget:text="gi_sd_extra"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_phone"
+                gwidget:text="gi_phone"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_share"
+                gwidget:text="gi_share"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_tag"
+                gwidget:text="gi_tag"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_thumbs"
+                gwidget:text="gi_thumbs"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_user"
+                gwidget:text="gi_user"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_user_circle_o"
+                gwidget:text="gi_user_circle_o"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_voice"
+                gwidget:text="gi_voice"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_wifi_off"
+                gwidget:text="gi_wifi_off"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_wifi_on"
+                gwidget:text="gi_wifi_on"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+
+            <com.gecq.gwidget.IconTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                gwidget:iconSize="18sp"
+                gwidget:iconTop="@string/gi_angle_o_up"
+                gwidget:text="gi_angle_o_up"
+                gwidget:textSize="@dimen/iconlib_textsize" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
