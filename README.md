@@ -1,7 +1,11 @@
-gwidget:
+这是gwidget的测试项目
 =======
 	注:在使用gwidget样式前，需在根节点中添加
 	xmlns:gwidget="http://schemas.android.com/apk/res/com.gecq.gwidget"
+依赖
+------
+### 1.[gwidgetLib](https://github.com/gechaoqing/gwidgetLib),这是源码
+### 2.[gwidgetIconsLib](https://github.com/gechaoqing/gwidgetIconsLib),这是SVG矢量路径资源包
 1.SwitchButton
 ============
 SwitchButton:使用说明
