@@ -9,11 +9,11 @@
     <com.gecq.gwidget.IconTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        gwidget:iconBottom="@string/icon_feedback"
-        gwidget:iconLeft="@string/icon_clock"
-        gwidget:iconRight="@string/icon_sys_setting"
+        gwidget:iconBottom="@string/geicons_feedback"
+        gwidget:iconLeft="@string/geicons_clock"
+        gwidget:iconRight="@string/geicons_sys_setting"
         gwidget:iconSize="30sp"
-        gwidget:iconTop="@string/icon_sign_down"
+        gwidget:iconTop="@string/geicons_sign_down"
         gwidget:text="iconTextView"
         gwidget:textColor="#990000"
         gwidget:textSize="20sp" />
@@ -25,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             gwidget:iconSize="30sp"
-            gwidget:iconTop="@string/icon_sys_setting"
-            gwidget:iconLeft="@string/icon_sys_setting"
+            gwidget:iconTop="@string/geicons_sys_setting"
+            gwidget:iconLeft="@string/geicons_sys_setting"
             gwidget:iconPadding="10dp"
             gwidget:text="settingys"
             gwidget:textColor="#990000"
@@ -35,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             gwidget:iconSize="10sp"
-            gwidget:iconTop="@string/icon_sys_setting"
-            gwidget:iconLeft="@string/icon_sys_setting"
+            gwidget:iconTop="@string/geicons_sys_setting"
+            gwidget:iconLeft="@string/geicons_sys_setting"
             gwidget:iconPadding="10dp"
             gwidget:text="settingys"
             gwidget:textColor="#990000"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             gwidget:iconSize="30sp"
-            gwidget:iconTop="@string/icon_search"
+            gwidget:iconTop="@string/geicons_search"
             gwidget:text="search"
             gwidget:textColor="#990000"
             gwidget:textSize="20sp" />
@@ -62,8 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             gwidget:iconSize="30sp"
-            gwidget:iconTop="@string/icon_sys_setting"
-            gwidget:iconLeft="@string/icon_sys_setting"
+            gwidget:iconTop="@string/geicons_sys_setting"
+            gwidget:iconLeft="@string/geicons_sys_setting"
             gwidget:iconPadding="10dp"
             gwidget:text="settingys"
             gwidget:textColor="#990000"
@@ -74,18 +74,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             gwidget:iconSize="30sp"
-            gwidget:iconTop="@string/icon_exit"
+            gwidget:iconTop="@string/geicons_exit"
             gwidget:text="exit"
             gwidget:textColor="#990000"
             gwidget:textSize="20sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="exitgy"
-            android:textColor="#990000"
-            android:layout_gravity="bottom"
-            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>
