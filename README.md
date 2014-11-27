@@ -86,13 +86,17 @@ IconTextView:使用说明
 IconCheckBox:使用说明
 --------
 	继承SvgPathView->View，实现通过SVG Path字符串绘制图形/图标
-### 5.1.Layout文件中定义样式
+### 5.1.设置监听
+	IconCheckBox checkBox=(IconCheckBox)findViewById(R.id.check_box);
+	checkBox.setOnCheckedChangedListener(new CheckedChangedListener(){
+	});
+### 5.2.Layout文件中定义样式
     gwidget:iconChecked      ------选中时候的图形
     gwidget:iconCheckedColor ------选中时候图形的颜色
     gwidget:icon             ------未选中时候的图形
     gwidget:iconColor        ------未选中时候图形的颜色
     gwidget:iconSize         ------checkBox大小
-### 5.2.图例
+### 5.3.图例
  ![github](https://github.com/gechaoqing/gwidget/blob/master/iconcheckbox.gif) 
 6.BlurImageView
 ==========
