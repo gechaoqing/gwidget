@@ -16,10 +16,9 @@
 ![github](https://github.com/gechaoqing/gwidget/blob/master/radiusImage2.jpg) 
 3.IconView
 ----------
-![github](https://github.com/gechaoqing/gwidgetIconsLib/blob/master/icons_1.jpg) 
+![github](https://github.com/gechaoqing/gwidget/blob/master/icon.jpg) 
 4.IconTextView
 ---------
-### 4.2.图例
  ![github](https://github.com/gechaoqing/gwidget/blob/master/iconTextView.jpg) 
 5.IconCheckBox
 --------
