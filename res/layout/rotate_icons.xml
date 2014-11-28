@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gwidget="http://schemas.android.com/apk/res/com.gecq.gwidget"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center"
+    >
+
+    <com.gecq.gwidget.RotateIconView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        gwidget:icon="@string/gi_refresh_arrow"
+        gwidget:iconSize="50sp" />
+    
+    <com.gecq.gwidget.RotateIconViewV2
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        gwidget:icon="@string/gi_refresh_left"
+        gwidget:rotateDir="counterclockwise"
+        gwidget:iconSize="50sp" />
+    
+    <com.gecq.gwidget.RotateIconViewV2
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        gwidget:icon="@string/gi_refresh_arrow_in"
+        gwidget:iconSize="50sp" />
+    
+    <com.gecq.gwidget.RotateIconView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        gwidget:icon="@string/gi_refresh_arrow_in"
+        gwidget:iconSize="10sp" />
+
+</LinearLayout>
