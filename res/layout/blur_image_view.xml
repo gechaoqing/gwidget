@@ -18,27 +18,27 @@
         android:layout_height="200dp"
         android:layout_weight="1"
         android:src="@drawable/test_img"
-        gwidget:blurRadius="30sp" />
+        gwidget:blurRadius="30" />
 
     <com.gecq.gwidget.BlurImageView
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:layout_weight="1"
         android:src="@drawable/test_img"
-        gwidget:blurRadius="50sp" />
+        gwidget:blurRadius="50" />
 
     <com.gecq.gwidget.BlurImageView
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:layout_weight="1"
         android:src="@drawable/test_img"
-        gwidget:blurRadius="70sp" />
+        gwidget:blurRadius="70" />
 
     <com.gecq.gwidget.BlurImageView
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:layout_weight="1"
         android:src="@drawable/test_img"
-        gwidget:blurRadius="80sp" />
+        gwidget:blurRadius="80" />
 
 </LinearLayout>
